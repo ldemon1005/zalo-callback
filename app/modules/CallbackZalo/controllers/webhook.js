@@ -11,6 +11,7 @@ exports.callback = async (req, res, next) => {
         winston.info(`${JSON.stringify(req.body)}`);
         let data = req.body;
         console.log('data zalo callback: ',data);
+        console.log('-------------------------');
         return response.success(req, res, {
             'err_code': 0,
             'msg': 'success'
