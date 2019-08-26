@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "pm2 start ./server.yml -l ./logs/logging.log -o ./logs/console.log -e ./logs/errors.log",
+    "start": "node index.js",
     "pause": "pm2 stop ./server.yml",
     "load": "pm2 list",
     "stop": "pm2 kill",
