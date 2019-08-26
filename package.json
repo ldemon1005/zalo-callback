@@ -1,0 +1,37 @@
+{
+  "name": "gateway",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "pm2 start ./server.yml -l ./logs/logging.log -o ./logs/console.log -e ./logs/errors.log",
+    "pause": "pm2 stop ./server.yml",
+    "load": "pm2 list",
+    "stop": "pm2 kill",
+    "show": "pm2 monit",
+    "reload": "pm2 reload",
+    "dev": "nodemon index.js localhost 9001"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.5.5",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "ioredis": "^4.11.2",
+    "kue": "^0.11.6",
+    "lodash": "^4.17.15",
+    "moment-timezone": "^0.5.26",
+    "morgan": "^1.9.1",
+    "path": "^0.12.7",
+    "pg": "^7.11.0",
+    "q": "^1.5.1",
+    "querystring": "^0.2.0",
+    "request": "^2.88.0",
+    "winston": "^3.2.1",
+    "winston-daily-rotate-file": "^3.10.0"
+  }
+}

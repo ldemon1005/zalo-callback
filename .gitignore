@@ -1,0 +1,5 @@
+/node_modules
+/logs
+#server.yml
+# Dockerfile
+# docker-compose.yml

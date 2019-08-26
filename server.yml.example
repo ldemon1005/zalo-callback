@@ -1,0 +1,25 @@
+apps:
+  - script    : ./index.js
+    name      : 'VNPOST GATEWAY'
+    cwd       : ./
+    watch     : true
+    instances : 'max'
+    max_memory_restart: '4096M'
+    node_args : '--expose-gc --max-old-space-size=4096'
+    exec_mode : 'cluster'
+    env :
+      PORT: 9001
+      ENV : development
+    env_product :
+      PORT: 9000
+      ENV : production
+    ignore_watch: [node_modules, logs]
+    log_date_format: 'ddd YYYY-MM-DD HH:mm:ss.SSS Z'
+    error_file: ./logs/error.log
+    out_file: ./logs/console.log
+    pid_file: ./logs/process.pid
+    max_memory_restart: 500M 
+    max_restarts: 10 
+    combine_logs: true
+    merge_logs: true
+    source_map_support: true

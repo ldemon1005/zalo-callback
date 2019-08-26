@@ -1,0 +1,13 @@
+version: "2"
+services:
+  apiman-salesforce:
+    build: .
+    image: "node:8"
+    working_dir: /var/www/sandbox.cmcsi.com/oauth-salesforce
+    volumes:
+      - ./:/var/www/sandbox.cmcsi.com/oauth-salesforce
+    ports:
+      - "3000:3000"
+    command: "npm start"
+    environment:
+      TZ: "Asia/Ho_Chi_Minh"

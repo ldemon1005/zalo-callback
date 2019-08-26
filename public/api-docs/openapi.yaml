@@ -1,0 +1,3191 @@
+openapi: 3.0.0
+info:
+  version: '1.0.0'
+  description: "VNPOST GATEWAY API"
+  title: VNPOST GATEWAY API
+servers:
+  # - url: 'http://183.91.11.56:8000/v46.0'
+  #   description: Sandbox Server
+  - url: 'http://183.91.11.56:9001/v46.0'
+    description: Sandbox Server
+  - url: 'http://localhost:9001/v46.0'
+    description: Local Server
+tags:
+  - name: auth
+    description: |
+      User chatter login with username and password in SF.
+  - name: lead
+    description: |
+      Lead use with SF API Restful.
+  - name: account
+    description: |
+      Account use with SF API Restful.
+  - name: contact
+    description: |
+      Contact use with SF API Restful.
+  - name: employee
+    description: |
+      Employee use with SF API Restful.
+  - name: product
+    description: |
+      Product (Service) use with SF API Restful.
+  - name: deal
+    description: |
+      deal use with SF API Restful.
+  - name: case
+    description: |
+      case use with SF API Restful.
+  - name: transaction
+    description: |
+      Transaction (Sales Order) use with SF API Restful.
+  - name: status
+    description: |
+      Status use with SF API Restful.
+  - name: task
+    description: |
+      Task use with SF API Restful.
+  - name: note
+    description: |
+      Note use with SF API Restful.
+  - name: sobjects
+    description: |
+      Sobjects use with SF API Restful.
+  - name: query
+    description: |
+      Query use with SF API Restful.
+x-tagGroups:
+  - name: auth
+    tags:
+      - auth
+  - name: lead
+    tags:
+      - lead
+  - name: contact
+    tags:
+      - contact
+  - name: account
+    tags:
+      - account
+  - name: employee
+    tags:
+      - employee
+  - name: product
+    tags:
+      - product
+  - name: deal
+    tags:
+      - deal
+  - name: case
+    tags:
+      - case
+  - name: transaction
+    tags:
+      - transaction
+  - name: status
+    tags:
+      - status
+  - name: task
+    tags:
+      - task
+  - name: note
+    tags:
+      - note
+  - name: sobjects
+    tags:
+      - sobjects
+  - name: query
+    tags:
+      - query
+security:
+  - ApiKey: []
+paths:
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: User login into the system /auth/login
+      security: []
+      description: |
+        User Login Use Username/Password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthPassword'
+        description: AuthPassword resource
+        required: true
+      responses:
+        '200':
+          description: token
+          schema:
+            type: string
+          headers:
+            X-Rate-Limit:
+              type: integer
+              format: int32
+              description: calls per hour allowed by the user
+            X-Expires-After:
+              type: string
+              format: date-time
+              description: date when token expires
+        '400':
+          description: Invalid username/password supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  # /auth/refresh:
+  #   post:
+  #     tags:
+  #       - auth
+  #     summary: Use token get refresh token /auth/refresh
+  #     description: |
+  #       Refresh token
+  #     responses:
+  #       '200':
+  #         description: token
+  #         schema:
+  #           type: string
+  #         headers:
+  #           X-Rate-Limit:
+  #             type: integer
+  #             format: int32
+  #             description: calls per hour allowed by the user
+  #           X-Expires-After:
+  #             type: string
+  #             format: date-time
+  #             description: date when token expires
+  #       '400':
+  #         description: Invalid username/password supplied
+  #         schema:
+  #           $ref: '#/definitions/Error'
+  #       '401':
+  #         description: Unauthorize
+  #         schema:
+  #           $ref: '#/definitions/Error'
+  /auth/logout:
+    post:
+      tags:
+        - auth
+      summary: User logout the system /auth/logout
+      description: ""
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/Success'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  # /auth/authorize:
+  #   post:
+  #     tags:
+  #       - auth
+  #     summary: User login authorize
+  #     description: ""
+  #     responses:
+  #       '200':
+  #         description: Successful operation
+  #         schema:
+  #           $ref: '#/definitions/Success'
+  #       '401':
+  #         description: Unauthorize
+  #         schema:
+  #           $ref: '#/definitions/Error'
+  /account:
+    get:
+      tags:
+        - account
+      summary: Find list account /account
+      description: "List account."
+      operationId: getaccount
+      parameters:
+        - name: f
+          in: query
+          description: Fields
+          required: false
+          type: string
+        - name: q
+          in: query
+          description: Conditions
+          required: false
+          type: string
+        - name: limit
+          in: query
+          description: Limit
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: Offset
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/account"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      tags:
+        - account
+      summary: Create a account /account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/account'
+        description: Account resource
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PostSuccess"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /account/{id}:
+    get:
+      tags:
+        - account
+      summary: Find account by id /account/{id}
+      description: Returns a single account
+      parameters:
+        - name: id
+          in: path
+          description: ID of account to return
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/account"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/Error'
+    patch:
+      tags:
+        - account
+      summary: Update a account /account/{id}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/account'
+        description: Account resource
+        required: true
+      parameters:
+        - name: id
+          in: path
+          description: Account id to update
+          required: true
+          type: string
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: Invalid parameters supplied
+    delete:
+      tags:
+        - account
+      summary: Deletes a account /account/{id}
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Account id to delete
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/Success'
+        "204":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/Success'
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /account/batch:
+    post:
+      tags:
+        - account
+      summary: Create contacts /account/batch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/accounts'
+        description: Accounts resource
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PostSuccess"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /lead:
+    get:
+      tags:
+        - lead
+      summary: Find list lead /lead
+      description: "List lead."
+      operationId: getlead
+      parameters:
+        - name: f
+          in: query
+          description: Fields
+          required: false
+          type: string
+        - name: q
+          in: query
+          description: Conditions
+          required: false
+          type: string
+        - name: limit
+          in: query
+          description: Limit
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: Offset
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/lead"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      tags:
+        - lead
+      summary: Create a lead /lead
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/lead'
+        description: Lead resource
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PostSuccess"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /lead/{id}:
+    get:
+      tags:
+        - lead
+      summary: Find lead by id /lead/{id}
+      description: Returns a single lead
+      parameters:
+        - name: id
+          in: path
+          description: ID of lead to return
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/lead"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/Error'
+    patch:
+      tags:
+        - lead
+      summary: Update a lead /lead/{id}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/lead'
+        description: Lead resource
+        required: true
+      parameters:
+        - name: id
+          in: path
+          description: lead id to update
+          required: true
+          type: string
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: Invalid parameters supplied
+    delete:
+      tags:
+        - lead
+      summary: Deletes a lead /lead/{id}
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Lead id to delete
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/Success'
+        "204":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/Success'
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /lead/batch:
+    post:
+      tags:
+        - lead
+      summary: Create contacts /lead/batch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/leads'
+        description: Leads resource
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PostSuccess"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /contact:
+    get:
+      tags:
+        - contact
+      summary: Find list contact /contact
+      description: "List contact."
+      operationId: getcontact
+      parameters:
+        - name: f
+          in: query
+          description: Fields
+          required: false
+          type: string
+        - name: q
+          in: query
+          description: Conditions
+          required: false
+          type: string
+        - name: limit
+          in: query
+          description: Limit
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: Offset
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/contact"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      tags:
+        - contact
+      summary: Create a contact /contact
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/contact'
+        description: Contact resource
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PostSuccess"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /contact/{id}:
+    get:
+      tags:
+        - contact
+      summary: Find contact by id /contact/{id}
+      description: Returns a single contact
+      parameters:
+        - name: id
+          in: path
+          description: ID of contact to return
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/contact"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/Error'
+    patch:
+      tags:
+        - contact
+      summary: Update a contact /contact/{id}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/contact'
+        description: Contact resource
+        required: true
+      parameters:
+        - name: id
+          in: path
+          description: Contact id to update
+          required: true
+          type: string
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: Invalid contact value
+    delete:
+      tags:
+        - contact
+      summary: Deletes a contact /contact/{id}
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Contact id to delete
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/Success'
+        "204":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/Success'
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /contact/batch:
+    post:
+      tags:
+        - contact
+      summary: Create contacts /contact/batch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/contacts'
+        description: Contacts resource
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PostSuccess"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'          
+  /employee:
+    get:
+      tags:
+        - employee
+      summary: Find list employee /employee
+      description: "List employee."
+      operationId: getemployee
+      parameters:
+        - name: f
+          in: query
+          description: Fields
+          required: false
+          type: string
+        - name: q
+          in: query
+          description: Conditions
+          required: false
+          type: string
+        - name: limit
+          in: query
+          description: Limit
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: Offset
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/employee"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      tags:
+        - employee
+      summary: Create a employee /employee
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/employee'
+        description: Trace Item resource
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            employees:
+              $ref: "#/definitions/PostSuccess"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /employee/{id}:
+    get:
+      tags:
+        - employee
+      summary: Find employee by id /employee/{id}
+      description: Returns a single employee
+      parameters:
+        - name: id
+          in: path
+          description: ID of employee to return
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/employee"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/Error'
+    patch:
+      tags:
+        - employee
+      summary: Update a employee /employee/{id}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/employee'
+        description: Trace Item resource
+        required: true
+      parameters:
+        - name: id
+          in: path
+          description: Trace Item id to update
+          required: true
+          type: string
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: Invalid parameters supplied
+    delete:
+      tags:
+        - employee
+      summary: Deletes a employee /employee/{id}
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: employee id to delete
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/Success'
+        "204":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/Success'
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /employee/batch:
+    post:
+      tags:
+        - employee
+      summary: Create employees /employee/batch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/employees'
+        description: Employees resource
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PostSuccess"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /product:
+    get:
+      tags:
+        - product
+      summary: Find list product /product
+      description: "List product."
+      operationId: getproduct
+      parameters:
+        - name: f
+          in: query
+          description: Fields
+          required: false
+          type: string
+        - name: q
+          in: query
+          description: Conditions
+          required: false
+          type: string
+        - name: limit
+          in: query
+          description: Limit
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: Offset
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/product"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      tags:
+        - product
+      summary: Create a product /product
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/product'
+        description: Product resource
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PostSuccess"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /product/{id}:
+    get:
+      tags:
+        - product
+      summary: Find product by id /product/{id}
+      description: Returns a single product
+      parameters:
+        - name: id
+          in: path
+          description: ID of product to return
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/product"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/Error'
+    patch:
+      tags:
+        - product
+      summary: Update a product /product/{id}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/product'
+        description: Product resource
+        required: true
+      parameters:
+        - name: id
+          in: path
+          description: Product id to update
+          required: true
+          type: string
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: Invalid parameters supplied
+    delete:
+      tags:
+        - product
+      summary: Deletes a product /product/{id}
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Product id to delete
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/Success'
+        "204":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/Success'
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /product/batch:
+    post:
+      tags:
+        - product
+      summary: Create products /product/batch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/products'
+        description: Products resource
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PostSuccess"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /deal:
+    get:
+      tags:
+        - deal
+      summary: Find list deal /deal
+      description: "List deal."
+      operationId: getdeal
+      parameters:
+        - name: f
+          in: query
+          description: Fields
+          required: false
+          type: string
+        - name: q
+          in: query
+          description: Condtions
+          required: false
+          type: string
+        - name: limit
+          in: query
+          description: Limit
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: Offset
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/deal"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      tags:
+        - deal
+      summary: Create a deal /deal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/deal'
+        description: deal resource
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PostSuccess"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /deal/{id}:
+    get:
+      tags:
+        - deal
+      summary: Find deal by id /deal/{id}
+      description: Returns a single deal
+      parameters:
+        - name: id
+          in: path
+          description: ID of deal to return
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/deal"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/Error'
+    patch:
+      tags:
+        - deal
+      summary: Update a deal /deal/{id}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/deal'
+        description: deal resource
+        required: true
+      parameters:
+        - name: id
+          in: path
+          description: deal id to update
+          required: true
+          type: string
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: Invalid parameters supplied
+    delete:
+      tags:
+        - deal
+      summary: Deletes a deal /deal/{id}
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: deal id to delete
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/Success'
+        "204":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/Success'
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /deal/batch:
+    post:
+      tags:
+        - deal
+      summary: Create deals /deal/batch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/deals'
+        description: Deals resource
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PostSuccess"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /case:
+    get:
+      tags:
+        - case
+      summary: Find list case /case
+      description: "List case."
+      parameters:
+        - name: f
+          in: query
+          description: Fields
+          required: false
+          type: string
+        - name: q
+          in: query
+          description: Conditions
+          required: false
+          type: string
+        - name: limit
+          in: query
+          description: Limit
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: Offset
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/case"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      tags:
+        - case
+      summary: Create a case /case
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/case'
+        description: Case resource
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PostSuccess"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /case/{id}:
+    get:
+      tags:
+        - case
+      summary: Find case by id /case/{id}
+      description: Returns a single case
+      parameters:
+        - name: id
+          in: path
+          description: ID of case to return
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/case"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/Error'
+    patch:
+      tags:
+        - case
+      summary: Update a case /case/{id}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/case'
+        description: Case resource
+        required: true
+      parameters:
+        - name: id
+          in: path
+          description: Account id to update
+          required: true
+          type: string
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: Invalid parameters supplied
+    delete:
+      tags:
+        - case
+      summary: Deletes a case /case/{id}
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: Case id to delete
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/Success'
+        "204":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/Success'
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /case/batch:
+    post:
+      tags:
+        - case
+      summary: Create case /case/batch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/case'
+        description: Cases resource
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PostSuccess"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /transaction:
+    get:
+      tags:
+        - transaction
+      summary: Find list transaction /transaction
+      description: "List transaction."
+      operationId: gettransaction
+      parameters:
+        - name: f
+          in: query
+          description: Fields
+          required: false
+          type: string
+        - name: q
+          in: query
+          description: Conditions
+          required: false
+          type: string
+        - name: limit
+          in: query
+          description: Limit
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: Offset
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/transaction"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      tags:
+        - transaction
+      summary: Create a transaction /transaction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/transaction'
+        description: Item resource
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PostSuccess"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /transaction/{id}:
+    get:
+      tags:
+        - transaction
+      summary: Find transaction by id /transaction/{id}
+      description: Returns a single transaction
+      parameters:
+        - name: id
+          in: path
+          description: ID of transaction to return
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/transaction"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/Error'
+    patch:
+      tags:
+        - transaction
+      summary: Update a transaction /transaction/{id}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/transaction'
+        description: Transaction resource
+        required: true
+      parameters:
+        - name: id
+          in: path
+          description: Transaction id to update
+          required: true
+          type: string
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: Invalid parameters supplied
+    delete:
+      tags:
+        - transaction
+      summary: Deletes a transaction /transaction/{id}
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: transaction id to delete
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/Success'
+        "204":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/Success'
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /transaction/batch:
+    post:
+      tags:
+        - transaction
+      summary: Create transactions /transaction/batch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/transactions'
+        description: Employees resource
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PostSuccess"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /status:
+    get:
+      tags:
+        - status
+      summary: Find list status /status
+      description: "List status."
+      operationId: getstatus
+      parameters:
+        - name: f
+          in: query
+          description: Fields
+          required: false
+          type: string
+        - name: q
+          in: query
+          description: Conditions
+          required: false
+          type: string
+        - name: limit
+          in: query
+          description: Limit
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: Offset
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/status"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      tags:
+        - status
+      summary: Create a status /status
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/status'
+        description: Status resource
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PostSuccess"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /status/{id}:
+    get:
+      tags:
+        - status
+      summary: Find status by id /status/{id}
+      description: Returns a single status
+      parameters:
+        - name: id
+          in: path
+          description: ID of status to return
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/status"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/Error'
+    patch:
+      tags:
+        - status
+      summary: Update a status /status/{id}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/status'
+        description: Transaction resource
+        required: true
+      parameters:
+        - name: id
+          in: path
+          description: Transaction id to update
+          required: true
+          type: string
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: Invalid parameters supplied
+    delete:
+      tags:
+        - status
+      summary: Deletes a status /status/{id}
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: status id to delete
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/Success'
+        "204":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/Success'
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /status/batch:
+    post:
+      tags:
+        - status
+      summary: Create statuss /status/batch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/statuss'
+        description: Employees resource
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PostSuccess"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /task:
+    get:
+      tags:
+        - task
+      summary: Find list task /task
+      description: "List task."
+      parameters:
+        - name: f
+          in: query
+          description: Fields
+          required: false
+          type: string
+        - name: q
+          in: query
+          description: Conditions
+          required: false
+          type: string
+        - name: limit
+          in: query
+          description: Limit
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: Offset
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/task"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      tags:
+        - task
+      summary: Create a task /task
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/task'
+        description: task resource
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PostSuccess"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /task/{id}:
+    get:
+      tags:
+        - task
+      summary: Find task by id /task/{id}
+      description: Returns a single task
+      parameters:
+        - name: id
+          in: path
+          description: ID of task to return
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/task"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/Error'
+    patch:
+      tags:
+        - task
+      summary: Update a task /task/{id}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/task'
+        description: task resource
+        required: true
+      parameters:
+        - name: id
+          in: path
+          description: task id to update
+          required: true
+          type: string
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: Invalid parameters supplied
+    delete:
+      tags:
+        - task
+      summary: Deletes a task /task/{id}
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          description: task id to delete
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/Success'
+        "204":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/Success'
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /task/batch:
+    post:
+      tags:
+        - task
+      summary: Create task /task/batch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tasks'
+        description: tasks resource
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PostSuccess"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /note:
+    get:
+      tags:
+        - note
+      summary: Find list note /note
+      description: "List note."
+      parameters:
+        - name: objId
+          in: query
+          description: Item object Id
+          required: true
+          type: string
+        - name: limit
+          in: query
+          description: Limit
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: Offset
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/note"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      tags:
+        - note
+      summary: Create a note /note
+      parameters:
+        - name: objId
+          in: query
+          description: Item object Id
+          required: true
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/note'
+        description: Status resource
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PostSuccess"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /note/{id}:
+    get:
+      tags:
+        - note
+      summary: Find note by id /note/{id}
+      description: Returns a single note
+      parameters:
+        - name: id
+          in: path
+          description: ID of note to return
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/note"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/Error'
+    patch:
+      tags:
+        - note
+      summary: Update a note /note/{id}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/note'
+        description: Transaction resource
+        required: true
+      parameters:
+        - name: id
+          in: path
+          description: Transaction id to update
+          required: true
+          type: string
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: Invalid parameters supplied
+    delete:
+      tags:
+        - note
+      summary: Deletes a note /note/{id}
+      parameters:
+        - name: id
+          in: path
+          description: note id to delete
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/Success'
+        "204":
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/Success'
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /note/{id}/content:
+    get:
+      tags:
+        - note
+      summary: Find note content by id /note/{id}/content
+      description: Returns a single note content
+      parameters:
+        - name: id
+          in: path
+          description: ID of note content to return
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/note"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/Error'
+  /note/count:
+    get:
+      tags:
+        - note
+      summary: Total note /note/count
+      description: "Count Note"
+      parameters:
+        - name: objId
+          in: query
+          description: Item object Id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/note"
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+  /sobjects/{object}/describe:
+    get:
+      tags:
+        - sobjects
+      summary: Find describe by object /sobjects/{object}/describe
+      description: |
+        Returns describe sobjects with picklist value in field with Sobjects:
+        Lead, Account, Contact, Employee__c, User, Deal -> Opportunity, Product -> Product2, Status -> Status__c, Transaction -> Sales_Order__c
+      parameters:
+        - name: object
+          in: path
+          description: |
+            object: Lead, Account, Contact, Employee__c, User, Opportunity (Deal), Product2 (Product), Status__c (Status), Sales_Order__c (Transaction)
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/Error'
+  /query:
+    get:
+      tags:
+        - query
+      summary: Use Soql Syntax /query
+      description: |
+        Return data use soql syntax
+      parameters:
+        - name: q
+          in: query
+          description: Field query
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+        '400':
+          description: Invalid parameters supplied
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorize
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+  account:
+    type: object
+    required:
+      - Name
+    properties:
+      Name:
+        description: Name
+        type: string
+        example: "Account Name"
+      Description:
+        description: Description
+        type: string
+        example: "Description"        
+      ParentId:
+        description: ParentId
+        type: string
+        example: "0012v00002ONMKKAA5"
+      AnnualRevenue:
+        description: Annual Revenue
+        type: number
+        example: 10000
+      TaxCode__c:
+        description: Tax Code
+        type: string
+        example: "MST001"
+      Type:
+        description: Type
+        type: string
+        example: "Analyst|Competitor|Customer"
+      Industry:
+        description: Industry
+        type: string
+        example: "Banking|Education"
+      Phone:
+        description: Phone
+        type: string
+        example: "0356129999"
+      Mobile__c:
+        description: Mobile
+        type: string
+        example: "0356129999"
+      Website:
+        description: Website
+        type: string
+        example: "https://cmcts.com.vn"
+      BillingCity:
+        description: Billing City
+        type: string
+        example: ""
+      BillingCountry:
+        description: Billing Country
+        type: string
+        example: ""
+      BillingPostalCode:
+        description: Billing Postal Code
+        type: string
+        example: ""
+      BillingState:
+        description: Billing State
+        type: string
+        example: ""
+      BillingStreet:
+        description: Billing Street
+        type: string
+        example: ""
+      ShippingCity:
+        description: Shipping City
+        type: string
+        example: ""
+      ShippingCountry:
+        description: Shipping Country
+        type: string
+        example: ""
+      ShippingPostalCode:
+        description: Shipping Postal Code
+        type: string
+        example: ""
+      ShippingState:
+        description: Shipping State
+        type: string
+        example: ""
+      ShippingStreet:
+        description: Shipping Street
+        type: string
+        example: ""
+    xml:
+      name: account
+  product:
+    type: object
+    properties:
+      Name:
+        description: Name
+        type: string
+        example: "CRM"
+      ProductCode:
+        description: Product Code
+        type: string
+        example: ""
+      Product_Category__c:
+        description: Product Category
+        type: string
+        example: "Bưu kiện - Parcel"
+      Vendor_Name__c:
+        description: Vendor
+        type: string
+        example: ""
+      Manufacture__c:
+        description: Manufacture
+        type: string
+        example: "a0K2v00000pbfckEAA"
+      Sales_Start_Date__c:
+        description: Sales Start Date
+        type: string
+        example: "2019-29-07"
+      Sales_End_Date__c:
+        description: Sales End Date
+        type: string
+        example: "2019-29-07"
+      Support_Start_Date__c:
+        description: Support Start Date
+        type: string
+        example: "2019-29-07"
+      Support_End_Date__c:
+        description: Support End Date
+        type: string
+        example: "2019-29-07"
+      System_using__c:
+        description: System using
+        type: string
+        example: ""
+      Service_Status__c:
+        description: Service Status
+        type: string
+        example: ""
+      Unit_Price__c:
+        description: Unit Price
+        type: string
+        example: ""
+      Network__c:
+        description: Network
+        type: string
+        example: "Trong nước"
+      Item_Type__c:
+        description: Item Type
+        type: string
+        example: "LH1"
+    xml:
+      name: product
+  lead:
+    type: object
+    required:
+      - LastName
+      - Company
+      - Status
+    properties:
+      FirstName:
+        description: FirstName
+        type: string
+        example: ""
+      MiddleName:
+        description: MiddleName
+        type: string
+        example: ""
+      LastName:
+        description: LastName
+        type: string
+        example: ''
+      Title:
+        description: Title
+        type: string
+        example: ""
+      Status:
+        description: Lead Status
+        type: string
+        example: "New|Working|Nurturing|Qualified"
+      AnnualRevenue:
+        description: AnnualRevenue
+        type: number
+        format: currency
+      Description:
+        description: Description
+        type: string
+        example: ""
+      Phone:
+        description: Phone
+        type: string
+        example: ""
+      MobilePhone:
+        description: MobilePhone
+        type: string
+        example: ""
+      Fax:
+        description: Fax
+        type: string
+        example: ""
+      Company:
+        description: Company
+        type: string
+        example: "VNPOST"
+      Industry:
+        description: Industry
+        type: string
+        example: "Other|Energy|Government"
+      Email:
+        description: Email
+        type: string
+        example: ""
+      Website:
+        description: Website
+        type: string
+        example: ""
+      LeadSource:
+        description: LeadSource
+        type: string
+        example: "Other|Partner|Webinar"
+      Rating:
+        description: Rating
+        type: string
+        example: "Hot|Warm|Cold"
+      Employee__c:
+        description: Employee__c lookup to Id of Object Employee
+        type: string
+        example: ""
+    xml:
+      name: lead
+  contact:
+    type: object
+    required:
+      - LastName
+    properties:
+      FirstName:
+        description: First Name
+        type: string
+        example: "First Name"
+      LastName:
+        description: Last Name
+        type: string
+        example: "Last Name"
+      MiddleName:
+        description: Middle Name
+        type: string
+        example: "Middle Name"
+      Title:
+        description: Title
+        type: string
+        example: "Title"
+      Email:
+        description: Email
+        type: string
+        example: "sp@cmcts.com.vn"
+      Phone:
+        description: Phone
+        type: string
+        example: "0356129999"
+      Tax_Code_ID__c:
+        description: Tax Code ID
+        type: string
+        example: "Tax Code Id"
+      MobilePhone:
+        description: Mobile Phone
+        type: string
+        example: "0356129999"
+      Fax:
+        description: Fax
+        type: string
+        example: "0356129999"
+      Department:
+        description: Department
+        type: string
+        example: "Department"
+      AccountId:
+        description: AccountId lookup to Id of Object Account
+        type: string
+        example: "AO923FH832LO"
+      Employee__c:
+        description: Employee Id
+        type: string
+        example: "a0I2v000016RYTQEA4"
+      LeadSource:
+        description: Lead Source
+        type: string
+        example: "Other|Partner|Website"
+      AssistantName:
+        description: Assistant Name
+        type: string
+        example: ""
+      Birthdate:
+        description: Birthdate
+        type: string
+        example: "2019-25-07"
+      Description:
+        description: Description
+        type: string
+        example: "Description"
+      MailingCity:
+        description: Mailing City
+        type: string
+        example: ""
+      MailingCountry:
+        description: Mailing Country
+        type: string
+        example: ""
+      MailingPostalCode:
+        description: Mailing Postal Code
+        type: string
+        example: ""
+      MailingState:
+        description: Mailing State
+        type: string
+        example: ""
+      MailingStreet:
+        description: Mailing Street
+        type: string
+        example: ""
+      # Note:
+      #   type: array
+      #   items:
+      #     $ref: "#/definitions/note"
+    xml:
+      name: contact
+  deal:
+    type: object
+    required:
+      - Name
+      - AccountId
+      - CloseDate
+      - StageName
+    properties:
+      Name:
+        description: Name
+        type: string
+        example: "Deal Name"
+      Description:
+        description: Description
+        type: string
+        example: "Description"
+      AccountId:
+        description: AccountId lookup to Id of Object Account
+        type: string
+        example: "0012v00002ONMKKAA5"
+      Customer_s_Reference_Code__c:
+        description: Customer Reference Code
+        type: string
+        example: ""
+      Customer_s_Service__c:
+        description: Customer Service
+        type: string
+        example: ""
+      Post_Office__c:
+        description: Post Office
+        type: string
+        example: ""
+      Type:
+        description: Type
+        type: string
+        example: ""
+      Contact__c:
+        description: Contact
+        type: string
+        example: ""
+      Employee__c:
+        description: Employee__c lookup to Id of Object Employee
+        type: string
+        example: ""
+      Effective_Date__c:
+        description: Effective Date
+        type: string
+        example: "2019-29-07"
+      CloseDate:
+        description: "Close Date Ex: 2019-29-07"
+        type: string
+        example: "2019-29-07"
+      StageName:
+        description: Stage Name
+        type: string
+        example: ""
+      # ExpectedRevenue:
+      #   description: Expected Revenue
+      #   type: string
+      #   example: ""
+      CampaignId:
+        description: CampaignId lookup to Id of Object Campaign
+        type: string
+        example: ""
+      LeadSource:
+        description: Lead Source
+        type: string
+        example: ""
+      Download_File__c:
+        description: Download File
+        type: string
+        example: ""
+    xml:
+      name: deal
+  transaction:
+    type: object
+    required:
+      - Name
+    properties:
+      Name:
+        description: Name (Subject/Tracking Code)
+        type: string
+        example: "CODE"
+      Account__c:
+        description: Account
+        type: string
+        example: ""
+      Quote__c:
+        description: Quote
+        type: string
+        example: ""
+      Sales_Commission__c:
+        description: Sales Commission
+        type: string
+        example: ""
+      Carrier__c:
+        description: Carrier
+        type: string
+        example: ""
+      Deal__c:
+        description: Deal__c
+        type: string
+        example: ""
+      Purchase_Order__c:
+        description: Purchase Order
+        type: string
+        example: ""
+      Contact__c:
+        description: Contact
+        type: string
+        example: ""
+      Lead_Time__c:
+        description: Lead Time
+        type: string
+        example: ""
+      Reference_No__c:
+        description: Reference No
+        type: string
+        example: ""
+      Shipment_No__c:
+        description: Shipment No
+        type: string
+        example: ""
+      Type_Of_Shipment__c:
+        description: Type Of Shipment
+        type: string
+        example: ""
+      Net_Weight__c:
+        description: Net Weight
+        type: string
+        example: ""
+      Total_Weight__c:
+        description: Total Weight
+        type: string
+        example: ""
+      Datetime_Acceptanced__c:
+        description: Datetime Acceptanced
+        type: string
+        example: ""
+      Datetime_Created__c:
+        description: Datetime Created
+        type: string
+        example: ""
+      Country_Delivery__c:
+        description: Country Delivery
+        type: string
+        example: ""
+      Main_Fee__c:
+        description: Main Fee
+        type: string
+        example: ""
+      Extra_Fee__c:
+        description: Extra Fee
+        type: string
+        example: ""
+      Billing_City__c:
+        description: Billing City
+        type: string
+        example: ""
+      Billing_Country__c:
+        description: Billing Country
+        type: string
+        example: ""
+      Billing_Full_Address__c:
+        description: Billing Full Address
+        type: string
+        example: ""
+      Billing_Street__c:
+        description: Billing Street
+        type: string
+        example: ""
+      Billing_Zipcode__c:
+        description: Billing Zipcode
+        type: string
+        example: ""
+      Billing_State__c:
+        description: Billing State
+        type: string
+        example: ""
+      Billing_Account__c:
+        description: Billing Account
+        type: string
+        example: ""
+      Shipping_City__c:
+        description: Shipping City
+        type: string
+        example: ""
+      Shipping_Country__c:
+        description: Shipping Country
+        type: string
+        example: ""
+      Shipping_Email__c:
+        description: Shipping Email
+        type: string
+        example: ""
+      Shipping_Full_Address__c:
+        description: Shipping Address
+        type: string
+        example: ""
+      Shipping_Name__c:
+        description: Shipping Name
+        type: string
+        example: ""
+      Shipping_Phone__c:
+        description: Shipping Phone
+        type: string
+        example: ""
+      Shipping_State__c:
+        description: Shipping State
+        type: string
+        example: ""
+      Shipping_Street__c:
+        description: Shipping Street
+        type: string
+        example: ""
+      Shipping_Zipcode__c:
+        description: Shipping Zipcode
+        type: string
+        example: ""
+      Pickup_City__c:
+        description: Pickup City
+        type: string
+        example: ""
+      Pickup_Country__c:
+        description: Pickup Country
+        type: string
+        example: ""
+      Pickup_Email__c:
+        description: Pickup Email
+        type: string
+        example: ""
+      Pickup_Full_Address__c:
+        description: Pickup Address
+        type: string
+        example: ""
+      Pickup_Name__c:
+        description: Pickup Name
+        type: string
+        example: ""
+      Pickup_Phone__c:
+        description: Pickup Phone
+        type: string
+        example: ""
+      Pickup_State__c:
+        description: Pickup State
+        type: string
+        example: ""
+      Pickup_Street__c:
+        description: Pickup Street
+        type: string
+        example: ""
+      Pickup_Zipcode__c:
+        description: Pickup Zipcode
+        type: string
+        example: ""
+      Description_Information__c:
+        description: Description Information
+        type: string
+        example: ""
+      COD_Amount__c:
+        description: COD Amount
+        type: string
+        example: ""
+    xml:
+      name: transaction
+  case:
+    type: object
+    required:
+      - Subject
+    properties:
+      Subject:
+        description: Subject
+        type: string
+        example: "Subject"
+      Description:
+        description: Description
+        type: string
+        example: "Description"
+      Comments:
+        description: Comments
+        type: string
+        example: ""
+      Priority:
+        description: Priority
+        type: string
+        example: ""
+      Status:
+        description: Status
+        type: string
+        example: ""
+      Type:
+        description: Type
+        type: string
+        example: ""
+      SuppliedCompany:
+        description: SuppliedCompany
+        type: string
+        example: ""
+      SuppliedEmail:
+        description: SuppliedEmail
+        type: string
+        example: ""
+      SuppliedName:
+        description: SuppliedName
+        type: string
+        example: ""
+      SuppliedPhone:
+        description: SuppliedPhone
+        type: string
+        example: ""
+      ContactPhone:
+        description: ContactPhone
+        type: string
+        example: ""
+    xml:
+      name: case
+  status:
+    type: object
+    required:
+      - Name
+      - Tracking_Code__c
+    properties:
+      Name:
+        description: Name(Status Code)
+        type: string
+        example: "CODE"
+      Description__c:
+        description: Description
+        type: string
+        example: ""
+      Datetime_Created__c:
+        description: Datetime Created
+        type: string
+        example: "2019-07-29T03:47:54.000+0000"
+      StatusText__c:
+        description: Status Text
+        type: string
+        example: ""
+      Location__c:
+        description: Location
+        type: string
+        example: ""
+      Tracking_Code__c:
+        description: Tracking Code (Sales Order Code / Transaction)
+        type: string
+        example: "a0A2v00000q6YQcEAM"
+    xml:
+      name: item
+  employee:
+    type: object
+    required:
+      - Name
+    properties:
+      Name:
+        description: Name
+        type: string
+        example: "employee Name"
+      Phone__c:
+        description: Phone__c
+        type: string
+        example: ""
+      Mobile__c:
+        description: Mobile
+        type: string
+        example: ""
+      Email__c:
+        description: Email
+        type: string
+        example: ""
+      Department__c:
+        description: Department
+        type: string
+        example: ""
+      Employee_Manager__c:
+        description: Employee_Manager__c lookup to Id of Object User.
+        type: string
+        example: ""
+      Employee_Code__c:
+        description: Employee Code
+        type: string
+        example: ""
+      Post_Office__c:
+        description: Post Office
+        type: string
+        example: ""
+      Type__c:
+        description: Type
+        type: string
+        example: "New|Other"
+      Status__c:
+        description: Status
+        type: string
+        example: "New|Other"
+    xml:
+      name: employee
+  task:
+    type: object
+    required:
+      - Subject
+    properties:
+      Subject:
+        description: Subject
+        type: string
+        example: "mail: Viet Nam Post Case # 00019737:  Yêu cầu làm rõ nguyên nhân đơn hàng EV992819734VN 10 ngày trời vẫn chưa tới nơi."
+      Description:
+        description: Description
+        type: string
+        example: ""
+      WhatId:
+        description: Id of Object
+        type: string
+        example: "5002v00002RyPw2AAF"
+      WhoId:
+        description: Id of User create Task
+        type: string
+        example: "0032v00002rTtyNAAS"
+      Record_Url__c:
+        description: Record url
+        type: string
+        example: ""
+      TaskSubtype:
+        description: Task Subtype
+        type: string
+        example: "Email"
+      Status:
+        description: Status
+        type: string
+        example: "Completed"
+      Priority:
+        description: Priority
+        type: string
+        example: "Normal"
+    xml:
+      name: task
+  note:
+    type: object
+    required:
+      - Title
+      - Content
+    properties:
+      Title:
+        description: Title
+        type: string
+        example: "Title"
+      Content:
+        description: Status
+        type: string
+        example: "Content"
+    xml:
+      name: note
+  Error:
+    type: object
+    properties:
+      statusCode:
+        type: integer
+        minimum: 400
+        maximum: 600
+        description: The HTTP status code.
+      statusMessage:
+        type: string
+      body:
+        type: object
+        properties:
+          message:
+            description: Failure
+            type: string
+          errorCode:
+            description: Invalid_Params
+  Success:
+    type: object
+    properties:
+      statusCode:
+        type: integer
+        minimum: 100
+        maximum: 399
+        description: The HTTP status code.
+      statusMessage:
+        type: string
+      body:
+        type: object
+        properties:
+          message:
+            description: Deleted success
+            type: string
+          errorCode:
+            description: DELETE_SESSION
+  PostSuccess:
+    type: object
+    properties:
+      statusCode:
+        type: integer
+        minimum: 100
+        maximum: 399
+        description: The HTTP status code.
+      statusMessage:
+        type: string
+      body:
+        type: object
+        properties:
+          id:
+            description: 0060w000002j6uSAAQ
+            type: string
+          success:
+            description: true
+          errors:
+            description: []
+components:
+  schemas:
+    account:
+      $ref: "#/definitions/account"
+    accounts:
+      type: array
+      items: 
+        $ref: "#/definitions/account"
+    task:
+      $ref: "#/definitions/task"
+    tasks:
+      type: array
+      items: 
+        $ref: "#/definitions/task"
+    contact:
+      $ref: "#/definitions/contact"
+    contacts:
+      type: array
+      items: 
+        $ref: "#/definitions/contact"
+    product:
+      $ref: "#/definitions/product"
+    products:
+      type: array
+      items: 
+        $ref: "#/definitions/product"
+    lead:
+      $ref: "#/definitions/lead"
+    leads:
+      type: array
+      items: 
+        $ref: "#/definitions/lead"
+    deal:
+      $ref: "#/definitions/deal"
+    deals:
+      type: array
+      items: 
+        $ref: "#/definitions/deal"
+    case:
+      $ref: "#/definitions/case"
+    transaction:
+      $ref: "#/definitions/transaction"
+    transactions:
+      type: array
+      items: 
+        $ref: "#/definitions/transaction"
+    status:
+      $ref: "#/definitions/status"
+    statuss:
+      type: array
+      items: 
+        $ref: "#/definitions/status"
+    employee:
+      $ref: "#/definitions/employee"
+    employees:
+      type: array
+      items: 
+        $ref: "#/definitions/employee"
+    note:
+      $ref: "#/definitions/note"
+    AuthPassword:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          description: Username
+          type: string
+          example: admin2019@vnpost.com.vn
+        password:
+          description: Password
+          type: string
+          example: cmcsi123
+    ContentDLCreate:
+      properties:
+        statusCode:
+          type: integer
+        statusMessage:
+          type: string
+        body: object
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 600
+          description: The HTTP status code.
+        error:
+          type: string
+        type:
+          type: string
+          description: 'A URI reference that identifies the problem type. It should provide human-readable documentation for the problem type. When this member is not present, its value is assumed to be "about:blank".'
+        title:
+          type: string
+          description: 'A short, human-readable summary of the problem type. It SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.'
+    InvalidError:
+      description: Invalid data was sent
+      allOf:
+        - $ref: '#/components/schemas/Error'
+        - type: object
+          properties:
+            invalidFields:
+              type: array
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                    description: The field name. Dot notation is used for nested object field names.
+                  message:
+                    type: string
+              example:
+                - field: field1
+                  message: field1 is invalid
+                - field: subObject.field2
+                  message: field2 is invalid
+                - field: subObject.field2
+                  message: another error in the field2
+  responses:
+    AccessForbidden:
+      description: 'Access forbidden, invalid token was used'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Found:
+      description: Resource was moved
+      headers:
+        Location:
+          schema:
+            type: string
+    InvalidDataError:
+      description: Invalid data was sent
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InvalidError'
+    NotFound:
+      description: Resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    ApiKey:
+      description: |
+        Use access_token from login.
+      name: Authorization
+      type: apiKey
+      in: header

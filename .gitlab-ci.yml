@@ -1,0 +1,66 @@
+variables:
+  DATE: $(date '+%Y%m%d.%H%M')
+
+stages:
+  - Preparing
+  - Code bundle
+  - Build image
+  - Deploy
+
+create vars:
+  stage: Code bundle
+  tags:
+    - runner-develop
+  image: ubuntu:16.04
+  script: echo $(date '+%Y%m%d.%H%M') > .date
+  artifacts:
+    paths:
+    - .date
+
+yarn install:
+  stage: Code bundle
+  tags:
+    - runner-develop
+  image: registry.gitlab.com/cmc-ts/cts-service-server/image-builder:1.0
+  before_script:
+    # add dependency
+    - npm i -g forever --save
+    - npm i -g nodemon --save
+    - npm i -g pm2 --save  
+  script:
+    - mv .env.example .env
+    - yarn install
+    - yarn start
+    - rm -rf .git
+  artifacts:
+    paths:
+    - ./
+
+build image:
+  stage: Build image
+  tags:
+    - runner-develop
+  image: docker
+  before_script:
+    - export DATE=$(cat .date)
+    - docker login registry.gitlab.com -u $USER -p $PASSWORD
+  script:
+    - docker build -t registry.gitlab.com/cmc-ts/cts-service-server/cts-service-server:$DATE .
+
+deploy:
+  stage: Deploy
+  tags:
+    - runner-develop
+  image: registry.gitlab.com/cmc-ts/cts-service-server/image-builder:1.0
+  before_script:
+    # add ssh key
+    - 'which ssh-agent || ( apt-get install -qq openssh-client )'
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'    
+  script:
+    - ssh thieu@202.134.19.25 "cd /opt/deploy && bash cts-service-server.sh"
+    - ssh thieu@202.134.19.25 "cd /opt/deploy && docker stack deploy -c cts-service-server.yml cts-service-server"
+  retry:
+    max: 2
