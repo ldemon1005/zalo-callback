@@ -18,7 +18,7 @@ exports.callback = async (req, res, next) => {
         let saveLogs = this.saveLog(data);
         saveLogs.then(function (res) {
             console.log('saveLogs: ',res);
-        })
+        }).catch()
         if(saveLogs) {
             return response.success(req, res, {
                 'err_code': 0,
