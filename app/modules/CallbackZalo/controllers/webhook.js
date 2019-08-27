@@ -16,7 +16,7 @@ exports.callback = async (req, res, next) => {
         redis.s('Callback-Zalo:'+data.app_id+'-'+created_at, req.body);
 
         let saveLogs = this.saveLog(data);
-
+        console.log('saveLogs: ',saveLogs)
         if(saveLogs) {
             return response.success(req, res, {
                 'err_code': 0,
@@ -52,7 +52,8 @@ exports.saveLog = async (data) => {
         data.sender && data.sender.id ? data.sender.id : '',
         data.recipient && data.recipient.id ? data.recipient.id : '',
         data.event_name ? data.event_name : '',
-        data.message ? data.message : '',
+        data.message && data.message.text ? data.message.text : '',
+        data.time_callback ? data.time_callback : '',
         data.source ? data.source : '',
         data.follower && data.follower.id ? data.follower.id : '',
         data.oa_id ? data.oa_id : ''
@@ -67,7 +68,5 @@ exports.saveLog = async (data) => {
     let callLogs = await pgsql.query(sql, [
         data_sql
     ]);
-    console.log(callLogs);
-    if(callLogs) return true;
-    else return false;
+    return callLogs;
 };
