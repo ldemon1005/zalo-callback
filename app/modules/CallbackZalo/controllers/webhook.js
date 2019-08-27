@@ -4,9 +4,10 @@ const baseRepository = require('../../../services/repository'),
     consts = require('../../../consts'),
     eventName = require('../../../consts/eventName'),
     { redis, pgsql } = require('../../../libs/db'),
+    serviceZalo = require('../../../libs/serviceZalo'),
     winston = require('../../../configs/winston');
 
-
+const instance_url = process.env.INSTANCE_URL || 'https://tuandv1005-dev-ed.lightning.force.com';
 
 exports.callback = async (req, res, next) => {
     let created_at = new Date().getTime();
@@ -16,6 +17,14 @@ exports.callback = async (req, res, next) => {
         redis.s('Callback-Zalo:'+data.app_id+'-'+created_at, req.body);
 
         let saveLogs = this.saveLog(data);
+
+        let url = instance_url + '/services/apexrest/ZaloCallback';
+        let params = {
+            "oa_id": data.sender.id,
+            "message": data.message.text,
+            "time_send": data.timestamp
+        };
+        serviceZalo.postAsyncService(url,params);
 
         if(saveLogs) {
             return response.success(req, res, {
