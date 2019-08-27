@@ -16,9 +16,7 @@ exports.callback = async (req, res, next) => {
         redis.s('Callback-Zalo:'+data.app_id+'-'+created_at, req.body);
 
         let saveLogs = this.saveLog(data);
-        saveLogs.then(function (res) {
-            console.log('saveLogs: ',res);
-        });
+
         if(saveLogs) {
             return response.success(req, res, {
                 'err_code': 0,
@@ -55,20 +53,18 @@ exports.saveLog = async (data) => {
         data.recipient && data.recipient.id ? data.recipient.id : '',
         data.event_name ? data.event_name : '',
         data.message && data.message.text ? data.message.text : '',
-        data.time_callback ? data.time_callback : '',
+        data.timestamp ? data.timestamp : '',
         data.source ? data.source : '',
         data.follower && data.follower.id ? data.follower.id : '',
         data.oa_id ? data.oa_id : ''
     ];
-
     let sql = `
             INSERT INTO public.call_logs 
                 (created_at,app_id, sender_id, recipient_id, event_name, message, time_callback, source, follower_id, oa_id) 
-            VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
+            VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
             ;`
 
-    let callLogs = await pgsql.query(sql, [
-        data_sql
-    ]);
-    return callLogs;
+    let callLogs = await pgsql.query(sql, data_sql);
+    if(callLogs) return true;
+    else return false;
 };
