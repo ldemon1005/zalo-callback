@@ -53,6 +53,7 @@ exports.saveLog = async (data) => {
         data.recipient && data.recipient.id ? data.recipient.id : '',
         data.event_name ? data.event_name : '',
         data.message && data.message.text ? data.message.text : '',
+        data.message && data.message.msg_id ? data.message.msg_id : '',
         data.timestamp ? data.timestamp : '',
         data.source ? data.source : '',
         data.follower && data.follower.id ? data.follower.id : '',
@@ -60,7 +61,7 @@ exports.saveLog = async (data) => {
     ];
     let sql = `
             INSERT INTO public.call_logs 
-                (created_at,app_id, sender_id, recipient_id, event_name, message, time_callback, source, follower_id, oa_id) 
+                (created_at,app_id, sender_id, recipient_id, event_name, message, message_id, time_callback, source, follower_id, oa_id) 
             VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
             ;`
 
