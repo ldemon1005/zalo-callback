@@ -16,7 +16,9 @@ exports.callback = async (req, res, next) => {
         redis.s('Callback-Zalo:'+data.app_id+'-'+created_at, req.body);
 
         let saveLogs = this.saveLog(data);
-        console.log('saveLogs: ',saveLogs)
+        saveLogs.then(function (res) {
+            console.log('saveLogs: ',res);
+        })
         if(saveLogs) {
             return response.success(req, res, {
                 'err_code': 0,
