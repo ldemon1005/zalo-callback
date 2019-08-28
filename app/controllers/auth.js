@@ -40,8 +40,6 @@ exports.logout = async (req, res, next) => {
 }
 
 exports.callback = async (req, res, next) => {
-	console.log(111111);
-	console.log(res.body);
 	return response.success(req, res, res);
 }
 

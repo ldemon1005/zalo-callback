@@ -24,8 +24,7 @@ exports.callback = async (req, res, next) => {
             "message": data.message.text,
             "time_send": data.timestamp
         };
-        var response = serviceZalo.postAsyncService(url,params);
-        console.log('response',response);
+        serviceZalo.postAsyncService(url,params);
         if(saveLogs) {
             return response.success(req, res, {
                 'err_code': 0,
@@ -40,7 +39,7 @@ exports.callback = async (req, res, next) => {
 
     }catch(e){
         let error = e + '';
-        redis.s('ERROR-CALLCENTER-'+created_at, error);
+        redis.s('Callback-Zalo-Error:'+created_at, error);
         return response.fail(req, res, {
             'err_code': 1,
             'msg': e + ''
