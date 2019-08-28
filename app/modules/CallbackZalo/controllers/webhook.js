@@ -7,7 +7,7 @@ const baseRepository = require('../../../services/repository'),
     serviceZalo = require('../../../libs/serviceZalo'),
     winston = require('../../../configs/winston');
 
-const instance_url = process.env.INSTANCE_URL || 'https://tuandv1005-dev-ed.lightning.force.com';
+const instance_url = process.env.INSTANCE_URL || 'https://tuandv1005-dev-ed.my.salesforce.com';
 
 exports.callback = async (req, res, next) => {
     let created_at = new Date().getTime();
