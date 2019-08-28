@@ -50,7 +50,6 @@ const zaloWebhookRoutes = require('./modules/CallbackZalo/routes/webhook');
 app.use(`/${VERSION}/zalo`, zaloWebhookRoutes);
 const authRoutes = require('./routes/auth');
 app.use(`/${VERSION}/auth`, authRoutes);
-const caseRoutes = require('./routes/case');
 
 // error 404
 app.use((req, res, next) => {

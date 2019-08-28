@@ -71,7 +71,7 @@ exports.saveLog = async (data) => {
     let sql = `
             INSERT INTO public.call_logs 
                 (created_at,app_id, sender_id, recipient_id, event_name, message, message_id, time_callback, source, follower_id, oa_id) 
-            VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
+            VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
             ;`
 
     let callLogs = await pgsql.query(sql, data_sql);
