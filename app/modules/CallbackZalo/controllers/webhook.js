@@ -43,7 +43,7 @@ exports.callback = async (req, res, next) => {
                 json: true
             }
             const { body, statusCode } = await request.getAsync(opts);
-
+            console.log('statusCode', statusCode);
             if(statusCode){
                 let params = {
                     "event_name": "user_send_text",
@@ -56,6 +56,7 @@ exports.callback = async (req, res, next) => {
         }
 
         if(data.event_name == 'unfollow'){
+            console.log('data', data);
             let params = {
                 "event_name": "unfollow",
                 "oa_id": data.follower.id,
