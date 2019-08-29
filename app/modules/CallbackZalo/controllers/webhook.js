@@ -5,9 +5,8 @@ const baseRepository = require('../../../services/repository'),
     eventName = require('../../../consts/eventName'),
     { redis, pgsql } = require('../../../libs/db'),
     serviceZalo = require('../../../libs/serviceZalo'),
-    request = Promise.promisifyAll(require('request')),
     winston = require('../../../configs/winston');
-
+const Promise = require("bluebird"), request = Promise.promisifyAll(require('request'));
 const instance_url = process.env.INSTANCE_URL || 'https://tuandv1005-dev-ed.my.salesforce.com';
 let zalo_url = process.env.ZALO_URL;
 let zalo_oa_id = process.env.ZALO_OA_ID;
