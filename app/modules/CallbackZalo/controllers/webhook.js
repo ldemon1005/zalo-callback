@@ -5,9 +5,13 @@ const baseRepository = require('../../../services/repository'),
     eventName = require('../../../consts/eventName'),
     { redis, pgsql } = require('../../../libs/db'),
     serviceZalo = require('../../../libs/serviceZalo'),
+    request = Promise.promisifyAll(require('request')),
     winston = require('../../../configs/winston');
 
 const instance_url = process.env.INSTANCE_URL || 'https://tuandv1005-dev-ed.my.salesforce.com';
+let zalo_url = process.env.ZALO_URL;
+let zalo_oa_id = process.env.ZALO_OA_ID;
+let zalo_token = process.env.ZALO_TOKEN;
 
 exports.callback = async (req, res, next) => {
     let created_at = new Date().getTime();
@@ -17,14 +21,49 @@ exports.callback = async (req, res, next) => {
         redis.s('Callback-Zalo:'+data.app_id+'-'+created_at, req.body);
 
         let saveLogs = this.saveLog(data);
-
         let url = instance_url + '/services/apexrest/ZaloCallback';
-        let params = {
-            "oa_id": data.sender.id,
-            "message": data.message.text,
-            "time_send": data.timestamp
-        };
-        serviceZalo.postAsyncService(url,params);
+        if(data.event_name == 'user_send_text'){
+            let params = {
+                "event_name": "user_send_text",
+                "oa_id": data.sender.id,
+                "data": data.message.text,
+                "time_send": data.timestamp
+            };
+            serviceZalo.postAsyncService(url,params);
+        }
+
+        if(data.event_name == 'follow'){
+            let time_follow = data.timestamp;
+
+            let url_zalo = zalo_url + '/getprofile?access_token=' +
+                                zalo_token + '&oaid=' + zalo_oa_id + '&data={user_id=' + data.follower.id + '}';
+
+            const opts = {
+                url: url_zalo,
+                json: true
+            }
+            const { body, statusCode } = await request.getAsync(opts);
+
+            if(statusCode){
+                let params = {
+                    "event_name": "user_send_text",
+                    "oa_id": body.user_id,
+                    "data": body.display_name,
+                    "time_send": time_follow
+                };
+                serviceZalo.postAsyncService(url,params);
+            }
+        }
+
+        if(data.event_name == 'unfollow'){
+            let params = {
+                "event_name": "unfollow",
+                "oa_id": data.follower.id,
+                "data": '',
+                "time_send": data.timestamp
+            };
+            serviceZalo.postAsyncService(url,params);
+        }
         if(saveLogs) {
             return response.success(req, res, {
                 'err_code': 0,
