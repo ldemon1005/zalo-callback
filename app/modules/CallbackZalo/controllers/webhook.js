@@ -45,7 +45,7 @@ exports.callback = async (req, res, next) => {
             console.log('statusCode', statusCode);
             if(statusCode){
                 let params = {
-                    "event_name": "user_send_text",
+                    "event_name": "follow",
                     "oa_id": body.user_id,
                     "data": body.display_name,
                     "time_send": time_follow
