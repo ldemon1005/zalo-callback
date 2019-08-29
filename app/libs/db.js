@@ -78,7 +78,7 @@ redis.s = async (key = '', val = null, exp = 3600) => {
     let result
     if (key && val) {
         const value = utility.isJSON(val) ? JSON.stringify(val) : val
-        result = await redis.set(key, value, 'EX', parseInt((+new Date)/1000) + exp*24)
+        result = await redis.set(key, value, 'EX', 60*60*2)
     }
     return result
 }
