@@ -43,6 +43,7 @@ exports.callback = async (req, res, next) => {
             }
             const { body, statusCode } = await request.getAsync(opts);
             console.log('statusCode', statusCode);
+            console.log('body', body);
             if(statusCode){
                 let params = {
                     "event_name": "follow",
