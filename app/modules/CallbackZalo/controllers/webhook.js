@@ -47,10 +47,11 @@ exports.callback = async (req, res, next) => {
             if(statusCode){
                 let params = {
                     "event_name": "follow",
-                    "oa_id": body.user_id,
-                    "data": body.display_name,
+                    "oa_id": body.data.user_id,
+                    "data": body.data.display_name,
                     "time_send": time_follow
                 };
+                console.log(params);
                 serviceZalo.postAsyncService(url,params);
             }
         }
