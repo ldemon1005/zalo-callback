@@ -16,16 +16,16 @@ const VERSION = process.env.VERSION || 'v46.0';
 app.use(express.static('public'));
 
 app.use(morgan('combined', { stream: winston.stream }));
-// var whitelist = ['http://183.91.11.56:9001', 'http://183.91.11.56:8000', 'http://localhost:8000', 'http://localhost:9001']
-// var corsOptions = {
-//   origin: function (origin, callback) {
-//     if (whitelist.indexOf(origin) !== -1) {
-//       callback(null, true)
-//     } else {
-//       callback(new Error('Not allowed by CORS'))
-//     }
-//   }
-// }
+var whitelist = ['http://183.91.11.56:9001', 'http://183.91.11.56:8000', 'http://localhost:8000', 'http://localhost:9001','http://localhost:8080'];
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+};
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -50,6 +50,9 @@ const zaloWebhookRoutes = require('./modules/CallbackZalo/routes/webhook');
 app.use(`/${VERSION}/zalo`, zaloWebhookRoutes);
 const authRoutes = require('./routes/auth');
 app.use(`/${VERSION}/auth`, authRoutes);
+
+const logsRoutes = require('./routes/logs');
+app.use(`/${VERSION}/logs-login`, logsRoutes);
 
 // error 404
 app.use((req, res, next) => {
