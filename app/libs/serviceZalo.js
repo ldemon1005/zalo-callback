@@ -10,8 +10,7 @@ const app_token_url = process.env.CONSUMER_TOKEN_URL || 'https://login.salesforc
 const instance_url = process.env.INSTANCE_URL || 'https://tuandv1005-dev-ed.my.salesforce.com';
 
 exports.getToken = async () => {
-    //let token = await redis.g('Callback-Zalo-Token:zalo-token');
-    let token = null;
+    let token = await redis.g('Callback-Zalo-Token:zalo-token');
     if(!token){
         let username = 'dvtuan1@cmc.com.vn';
         let password = 'tuandv1005';
