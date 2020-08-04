@@ -41,6 +41,7 @@ module.exports = {
             json: true
         };
         const {statusCode, body} = await request.postAsync(opts);
+        console.log("url", url)
         console.log("params", params)
         console.log('body:', body);
         return {
