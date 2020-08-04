@@ -17,10 +17,9 @@ exports.callback = async (req, res, next) => {
     try{
         winston.info(`${JSON.stringify(req.body)}`);
         let data = req.body;
-        //redis.s('Callback-Zalo:'+data.app_id+'-'+created_at, req.body);
+        redis.s('Callback-Zalo:'+data.app_id+'-'+created_at, req.body);
 
-        //let saveLogs = this.saveLog(data);
-        let saveLogs = true;
+        let saveLogs = this.saveLog(data);
         let url = instance_url + '/services/apexrest/ZaloCallback';
         if(data.event_name == 'user_send_text'){
             let params = {
@@ -81,7 +80,7 @@ exports.callback = async (req, res, next) => {
 
     }catch(e){
         let error = e + '';
-        //redis.s('Callback-Zalo-Error:'+created_at, error);
+        redis.s('Callback-Zalo-Error:'+created_at, error);
         return response.fail(req, res, {
             'err_code': 1,
             'msg': e + ''
