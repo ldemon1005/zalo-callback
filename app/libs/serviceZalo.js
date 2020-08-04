@@ -13,7 +13,7 @@ exports.getToken = async () => {
     let token = await redis.g('Callback-Zalo-Token:zalo-token');
     if(!token){
         let username = 'dvtuan1@cmc.com.vn';
-        let password = 'daovantuan1005';
+        let password = 'tuandv1005';
         // login with salesforce
         const computedURL = app_token_url+'?client_id='+client_id+'&grant_type=password'+'&client_secret='+client_secret+'&username='+username+'&password='+password;
         let data = await authRepository.login(computedURL, {});
