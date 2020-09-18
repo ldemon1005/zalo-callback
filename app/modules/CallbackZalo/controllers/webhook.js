@@ -28,7 +28,6 @@ exports.callback = async (req, res, next) => {
                 "data": data.message.text,
                 "time_send": data.timestamp
             };
-            console.log('data: ' + params)
             serviceZalo.postAsyncService(url,params);
         }
 
@@ -43,8 +42,6 @@ exports.callback = async (req, res, next) => {
                 json: true
             }
             const { body, statusCode } = await request.getAsync(opts);
-            console.log('statusCode', statusCode);
-            console.log('body', body);
             if(statusCode){
                 let params = {
                     "event_name": "follow",
