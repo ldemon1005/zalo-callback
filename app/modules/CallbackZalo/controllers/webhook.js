@@ -28,6 +28,7 @@ exports.callback = async (req, res, next) => {
                 "data": data.message.text,
                 "time_send": data.timestamp
             };
+            console.log('data: ' + params)
             serviceZalo.postAsyncService(url,params);
         }
 
