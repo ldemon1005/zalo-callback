@@ -94,7 +94,7 @@ exports.getCallback = async (req, res, next) => {
 };
 
 exports.getAccessTokenZalo = async (req, res, next) => {
-    console.log(req.body);
+    console.log('token: ' + req.query);
     return response.success(req, res, {
         'err_code': 0,
         'msg': 'success'

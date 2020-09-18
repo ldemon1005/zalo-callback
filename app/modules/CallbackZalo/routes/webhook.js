@@ -8,6 +8,6 @@ router.post('/log', calllogController.detail);
 router.post('/logs', calllogController.details);
 router.post('/callback', webhookController.callback);
 router.get('/getCallback', webhookController.getCallback);
-router.post('/getAccessTokenZalo', webhookController.getAccessTokenZalo);
+router.get('/getAccessTokenZalo', webhookController.getAccessTokenZalo);
 
 module.exports = router;
