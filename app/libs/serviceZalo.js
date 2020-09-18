@@ -12,7 +12,7 @@ const username = process.env.USERNAME || 'tuandao1005@yopmail.com';
 const password = process.env.PASSWORD || 'tuandv1005';
 
 exports.getToken = async () => {
-    let token = await redis.g('Callback-Zalo-Token:zalo-token');
+    let token = await redis.g('Callback-Zalo-V2-Token:zalo-token');
     if(!token){
         // login with salesforce
         const computedURL = app_token_url+'?client_id='+client_id+'&grant_type=password'+'&client_secret='+client_secret+'&username='+username+'&password='+password;
@@ -41,7 +41,9 @@ module.exports = {
             json: true
         };
         const {statusCode, body} = await request.postAsync(opts);
-        console.log('body: ',body)
+        console.log("url", url)
+        console.log("params", params)
+        console.log('body:', body);
         return {
             body: body,
             statusCode: statusCode
