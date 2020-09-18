@@ -7,7 +7,7 @@ const baseRepository = require('../../../services/repository'),
     serviceZalo = require('../../../libs/serviceZalo'),
     winston = require('../../../configs/winston');
 const Promise = require("bluebird"), request = Promise.promisifyAll(require('request'));
-const instance_url = process.env.INSTANCE_URL || 'https://tuandv1005-dev-ed.my.salesforce.com';
+const instance_url = process.env.INSTANCE_URL || 'https://zalo-cmc-dev-ed.my.salesforce.com';
 let zalo_url = process.env.ZALO_URL;
 let zalo_oa_id = process.env.ZALO_OA_ID;
 let zalo_token = process.env.ZALO_TOKEN;
@@ -90,7 +90,15 @@ exports.callback = async (req, res, next) => {
 };
 
 exports.getCallback = async (req, res, next) => {
+    console.log(req.body);
+};
 
+exports.getAccessTokenZalo = async (req, res, next) => {
+    console.log(req.body);
+    return response.success(req, res, {
+        'err_code': 0,
+        'msg': 'success'
+    }, 200);
 };
 
 exports.saveLog = async (data) => {

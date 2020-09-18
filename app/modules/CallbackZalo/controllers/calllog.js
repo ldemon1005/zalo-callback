@@ -47,24 +47,6 @@ exports.details = async (req, res, next) => {
             }
         }
         body.push(data.rows[i]);
-        
-        // if(data.rows[i].type == 'inbound'){
-        //     if(data.rows[i].refer != ''){
-        //         //console.log(data.rows[i].refer);
-        //         if(data.rows[i].status == 'hangup'){
-        //             body.push(data.rows[i]);
-        //         }
-        //     }else{
-        //         console.log(data.rows[i]);
-        //         if(data.rows[i].status == 'answer'){
-        //             body.push(data.rows[i]);
-        //         }
-        //     }
-        // }else{
-        //     if(data.rows[i].status == 'hangup'){
-        //         body.push(data.rows[i]);
-        //     }
-        // }
     }
 
     return response.success(req, res, data.rows);
