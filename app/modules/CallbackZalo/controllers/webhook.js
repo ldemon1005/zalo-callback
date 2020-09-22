@@ -44,25 +44,33 @@ exports.callback = async (req, res, next) => {
                     "data": body.data.display_name,
                     "time_send": time_follow
                 };
-                let user = await serviceZalo.postAsyncService(url,params);
-                let user_data = {
-                    "username" : body.data.user_id + '@yopmail.com',
-                    "password" : "zalo@123",
-                    "profile" : "Chatter Free User",
-                    "status" : user.flow__c || 0 ,
-                    "oa_id" : body.data.user_id
-                };
-                if(this.createUser(user_data)){
-                    return response.success(req, res, {
-                        'err_code': 0,
-                        'msg': 'success'
-                    }, 200);
+                let {user, statusCode} = await serviceZalo.postAsyncService(url,params);
+                if(statusCode){
+                    let user_data = {
+                        "username" : body.data.user_id + '@yopmail.com',
+                        "password" : "zalo@123",
+                        "profile" : "Chatter Free User",
+                        "status" : user.flow__c || 0 ,
+                        "oa_id" : body.data.user_id
+                    };
+                    if(this.findOrCreateUser(user_data)){
+                        return response.success(req, res, {
+                            'err_code': 0,
+                            'msg': 'success'
+                        }, 200);
+                    }else {
+                        return response.fail(req, res, {
+                            'err_code': 1,
+                            'msg': e + ''
+                        }, 400);
+                    }
                 }else {
                     return response.fail(req, res, {
                         'err_code': 1,
                         'msg': e + ''
                     }, 400);
                 }
+
             }
         }
 
@@ -136,7 +144,11 @@ exports.saveLog = async (data) => {
     else return false;
 };
 
-exports.createUser = async (data) => {
+exports.findOrCreateUser = async (data) => {
+    let user = this.findUser(data.username);
+    if(user){
+       return true;
+    }
     let created_at = new Date().getTime();
     var data_sql = [
         created_at,
@@ -158,10 +170,9 @@ exports.createUser = async (data) => {
 };
 
 exports.findUser = async (oa_id) => {
-    let created_at = new Date().getTime();
     var data_sql = [oa_id];
     let sql = `SELECT * FROM public.users WHERE oa_id = $1;`
     let users = await pgsql.query(sql, data_sql);
-    if(users) return users;
+    if(users && users.rows.length > 0) return users.rows[0];
     else return null;
 };
