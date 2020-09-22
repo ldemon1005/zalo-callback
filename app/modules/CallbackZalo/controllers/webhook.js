@@ -43,7 +43,7 @@ exports.callback = async (req, res, next) => {
             }
             const { body, statusCode } = await request.getAsync(opts);
             if(statusCode){
-                console.log(body.data);
+                console.log('zalo user info: ',body.data);
                 let params = {
                     "event_name": "follow",
                     "oa_id": body.data.user_id,
