@@ -154,12 +154,12 @@ exports.createUser = async (data) => {
         data.status,
     ];
     let sql = `
-            INSERT INTO public.call_logs 
+            INSERT INTO public.users 
                 (created_at,username, password, profile, status, oa_id) 
             VALUES ($1,$2,$3,$4,$5,$6)
             ;`
 
-    let callLogs = await pgsql.query(sql, data_sql);
-    if(callLogs) return true;
+    let users = await pgsql.query(sql, data_sql);
+    if(users) return true;
     else return false;
 };
