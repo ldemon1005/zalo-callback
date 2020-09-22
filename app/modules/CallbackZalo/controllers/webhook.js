@@ -138,7 +138,7 @@ exports.saveLog = async (data) => {
 };
 
 exports.findOrCreateUser = async (data) => {
-    let user = this.findUser(data.username);
+    let user = await this.findUser(data.username);
     console.log(user)
     if(user){
        return true;
