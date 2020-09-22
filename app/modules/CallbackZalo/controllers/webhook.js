@@ -22,7 +22,7 @@ exports.callback = async (req, res, next) => {
         let saveLogs = this.saveLog(data);
         let url = instance_url + '/services/apexrest/ZaloCallback';
         if(data.event_name === 'user_send_text'){
-            let user = await this.findUser(data.sender.id);
+            let user = await this.findUser(data.sender.id + '@yopmail.com');
             console.log('user: ', user);
         }
 
