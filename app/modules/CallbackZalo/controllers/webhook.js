@@ -23,7 +23,11 @@ exports.callback = async (req, res, next) => {
         let url = instance_url + '/services/apexrest/ZaloCallback';
         if(data.event_name === 'user_send_text'){
             let user = await this.findUser(data.sender.id + '@yopmail.com');
-            console.log('user: ', user);
+            let url_chatter = instance_url + '/services/data/v49.0/chatter/users/me/messages';
+            let data = {
+                "body": data.message.text || '',
+                "recipients": ["0052w000006gu1oAAA"]
+            }
         }
 
         if(data.event_name === 'follow'){

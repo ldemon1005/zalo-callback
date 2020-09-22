@@ -46,7 +46,8 @@ module.exports = {
             statusCode: statusCode
         };
     },
-    postAsyncServiceChatter: async (url, params,token = '', ContentType='application/json') => {
+    postAsyncServiceChatter: async (url, params, user, ContentType='application/json') => {
+        let token = await this.getToken(user.username, user.password);
         const opts = {
             headers: {
                 'Authorization': 'Bearer ' + token,
