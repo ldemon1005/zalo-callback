@@ -45,25 +45,18 @@ exports.callback = async (req, res, next) => {
                     "time_send": time_follow
                 };
                 let {user, statusCode} = await serviceZalo.postAsyncService(url,params);
-                if(statusCode){
-                    let user_data = {
-                        "username" : body.data.user_id + '@yopmail.com',
-                        "password" : "zalo@123",
-                        "profile" : "Chatter Free User",
-                        "status" : user.flow__c || 0 ,
-                        "oa_id" : body.data.user_id
-                    };
-                    if(this.findOrCreateUser(user_data)){
-                        return response.success(req, res, {
-                            'err_code': 0,
-                            'msg': 'success'
-                        }, 200);
-                    }else {
-                        return response.fail(req, res, {
-                            'err_code': 1,
-                            'msg': e + ''
-                        }, 400);
-                    }
+                let user_data = {
+                    "username" : body.data.user_id + '@yopmail.com',
+                    "password" : "zalo@123",
+                    "profile" : "Chatter Free User",
+                    "status" : user.flow__c || 0 ,
+                    "oa_id" : body.data.user_id
+                };
+                if(this.findOrCreateUser(user_data)){
+                    return response.success(req, res, {
+                        'err_code': 0,
+                        'msg': 'success'
+                    }, 200);
                 }else {
                     return response.fail(req, res, {
                         'err_code': 1,
