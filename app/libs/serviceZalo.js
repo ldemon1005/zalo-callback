@@ -16,7 +16,7 @@ exports.getToken = async (username = '', password = '') => {
     password !== '' ? password : password = password_admin;
     let token = await redis.g('Callback-Zalo-V2-Token:auth-token:' + username);
     if(!token){
-        const computedURL = app_token_url+'?client_id='+client_id+'&grant_type=password_admin'+'&client_secret='+client_secret+'&username='+username+'&password='+password;
+        const computedURL = app_token_url+'?client_id='+client_id+'&grant_type=password'+'&client_secret='+client_secret+'&username='+username+'&password='+password;
         let data = await authRepository.login(computedURL, {});
         if(data.statusCode === statusCodeConst.SUCCESS){
             token = data.body.access_token;
