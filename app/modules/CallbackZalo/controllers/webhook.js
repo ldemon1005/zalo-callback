@@ -28,10 +28,11 @@ exports.callback = async (req, res, next) => {
                 console.log('sao thế')
                 let url_chatter = instance_url + '/services/data/v49.0/chatter/users/me/messages';
                 let data = {
-                    "body": data.message.text || '',
+                    "body": data.message && data.message.text || '',
                     "recipients": ["0052w000006gu1oAAA"]
                 }
                 let message = await serviceZalo.postAsyncServiceChatter(url_chatter,user, data);
+                console.log('alahu');
                 console.log('message: ',message)
             }
         }
