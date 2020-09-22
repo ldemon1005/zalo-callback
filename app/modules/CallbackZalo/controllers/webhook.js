@@ -43,16 +43,21 @@ exports.callback = async (req, res, next) => {
             }
             const { body, statusCode } = await request.getAsync(opts);
             if(statusCode){
-                console.log('zalo user info: ',body);
                 let params = {
                     "event_name": "follow",
                     "oa_id": body.data.user_id,
                     "data": body.data.display_name,
                     "time_send": time_follow
                 };
-                console.log(params);
-                let user = serviceZalo.postAsyncService(url,params);
+                let user = await serviceZalo.postAsyncService(url,params);
                 console.log(user);
+                let user_data = {
+                    "username" : body.data.user_id + '@yopmail.com',
+                    "password" : "zalo@123",
+                    "profile" : "Chatter Free User",
+                    "status" : user.flow__c || 0 ,
+                    "oa_id" : body.data.user_id
+                };
                 if(this.createUser(body.data)){
                     return response.success(req, res, {
                         'err_code': 0,
@@ -142,9 +147,11 @@ exports.createUser = async (data) => {
     let created_at = new Date().getTime();
     var data_sql = [
         created_at,
-        data.sender && data.sender.id ? data.sender.id : '',
-        data.recipient && data.recipient.id ? data.recipient.id : '',
-        data.status ? data.event_name : '',
+        data.username,
+        data.password,
+        data.profile,
+        data.oa_id,
+        data.status,
     ];
     let sql = `
             INSERT INTO public.call_logs 
