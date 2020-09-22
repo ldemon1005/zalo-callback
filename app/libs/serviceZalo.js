@@ -48,6 +48,7 @@ module.exports = {
     },
     postAsyncServiceChatter: async (url, params, user, ContentType='application/json') => {
         let token = await this.getToken(user.username, user.password);
+        console.log('token: ', token)
         const opts = {
             headers: {
                 'Authorization': 'Bearer ' + token,
