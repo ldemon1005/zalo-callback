@@ -10,7 +10,7 @@ const Promise = require("bluebird"), request = Promise.promisifyAll(require('req
 const instance_url = process.env.INSTANCE_URL || 'https://zalo-cmc-dev-ed.my.salesforce.com';
 let zalo_url = process.env.ZALO_URL;
 let zalo_oa_id = process.env.ZALO_OA_ID;
-let zalo_token = process.env.ZALO_TOKEN;
+let zalo_token = process.env.ZALO_TOKEN || "pvkB4NAbXGxCceWNTgI02ygIYn9tkyTifUtIRrkwe2o-o_zML8-aDxFNhbfTb-KOvlAuKXwjx1hAxw9CQjdP3AQaY4eSxDHSf9-z6sJvy5E6afz9MypNA8U3YYidyuP9phpO42JNaKZgkljI9lkKKP-hn3Tp_xPyp8hyOGZ0_1Mzlg1DSjIjCQo2zsfHqRPmaOJwQqpfjdUmekaMUik63BwAwqC1lQOFnUFCMJ6yfq_8wgrPAwFDHPVJdb9MZTmsl-ocB7-pq62JrvabK97tSU_lX1LvZGSuBd6oW0e";
 
 exports.callback = async (req, res, next) => {
     let created_at = new Date().getTime();
@@ -35,7 +35,7 @@ exports.callback = async (req, res, next) => {
             let time_follow = data.timestamp;
 
             let url_zalo = zalo_url + '/getprofile?access_token=' +
-                                zalo_token + '&oaid=' + zalo_oa_id + '&data={user_id=' + data.follower.id + '}';
+                                zalo_token + '&data={user_id=' + data.follower.id + '}';
 
             const opts = {
                 url: url_zalo,
@@ -43,7 +43,7 @@ exports.callback = async (req, res, next) => {
             }
             const { body, statusCode } = await request.getAsync(opts);
             if(statusCode){
-                console.log('zalo user info: ',body.data);
+                console.log('zalo user info: ',body);
                 let params = {
                     "event_name": "follow",
                     "oa_id": body.data.user_id,
