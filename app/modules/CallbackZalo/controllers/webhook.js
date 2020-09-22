@@ -110,7 +110,7 @@ exports.getCallback = async (req, res, next) => {
 };
 
 exports.getAccessTokenZalo = async (req, res, next) => {
-    console.log('token: ' + req.query);
+    //console.log('token: ' + req.query);
     return response.success(req, res, {
         'err_code': 0,
         'msg': 'success'
@@ -150,9 +150,10 @@ exports.createUser = async (data) => {
         data.username,
         data.password,
         data.profile,
-        data.oa_id,
         data.status,
+        data.oa_id
     ];
+    console.log('data_sql: ',data_sql)
     let sql = `
             INSERT INTO public.users 
                 (created_at,username, password, profile, status, oa_id) 
