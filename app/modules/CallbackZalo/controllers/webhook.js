@@ -44,7 +44,7 @@ exports.callback = async (req, res, next) => {
                     "data": body.data.display_name,
                     "time_send": time_follow
                 };
-                let {user, statusCode} = await serviceZalo.postAsyncService(url,params);
+                let user = await serviceZalo.postAsyncService(url,params);
                 let user_data = {
                     "username" : body.data.user_id + '@yopmail.com',
                     "password" : "zalo@123",
@@ -139,6 +139,7 @@ exports.saveLog = async (data) => {
 
 exports.findOrCreateUser = async (data) => {
     let user = this.findUser(data.username);
+    console.log(user)
     if(user){
        return true;
     }
@@ -162,9 +163,9 @@ exports.findOrCreateUser = async (data) => {
     else return false;
 };
 
-exports.findUser = async (oa_id) => {
-    var data_sql = [oa_id];
-    let sql = `SELECT * FROM public.users WHERE oa_id = $1;`
+exports.findUser = async (username) => {
+    var data_sql = [username];
+    let sql = `SELECT * FROM public.users WHERE username = $1;`
     let users = await pgsql.query(sql, data_sql);
     if(users && users.rows.length > 0) return users.rows[0];
     else return null;
