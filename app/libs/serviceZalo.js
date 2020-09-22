@@ -14,13 +14,16 @@ const password_admin = process.env.PASSWORD || 'tuandv1005';
 exports.getToken = async (username = '', password = '') => {
     username !== '' ? username : username = username_admin;
     password !== '' ? password : password = password_admin;
-    let token = await redis.g('Callback-Zalo-V2-Token:auth-token:' + username);
+    console.log(username, password)
+    let key = 'Callback-Zalo-V2-Token:auth-token:' + username;
+    let token = await redis.g(key);
     if(!token){
         const computedURL = app_token_url+'?client_id='+client_id+'&grant_type=password'+'&client_secret='+client_secret+'&username='+username+'&password='+password;
         let data = await authRepository.login(computedURL, {});
+        console.log(data.statusCode)
         if(data.statusCode === statusCodeConst.SUCCESS){
             token = data.body.access_token;
-            await redis.s('Callback-Zalo-Token:zalo-token',data.body.access_token);
+            await redis.s(key,data.body.access_token);
             return token;
         }
     }else {
@@ -48,7 +51,6 @@ module.exports = {
     },
     postAsyncServiceChatter: async (url, params, user, ContentType='application/json') => {
         let token = await this.getToken(user.username, user.password);
-        console.log('token: ', token)
         const opts = {
             headers: {
                 'Authorization': 'Bearer ' + token,
