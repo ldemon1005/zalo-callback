@@ -25,6 +25,7 @@ exports.callback = async (req, res, next) => {
             let user = await this.findUser(data.sender.id + '@yopmail.com');
             console.log('user: ', user)
             if(user){
+                console.log('sao thế')
                 let url_chatter = instance_url + '/services/data/v49.0/chatter/users/me/messages';
                 let data = {
                     "body": data.message.text || '',
