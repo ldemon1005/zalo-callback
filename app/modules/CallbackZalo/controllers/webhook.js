@@ -21,7 +21,7 @@ exports.callback = async (req, res, next) => {
 
         let saveLogs = this.saveLog(data);
         let url = instance_url + '/services/apexrest/ZaloCallback';
-        if(data.event_name == 'user_send_text'){
+        if(data.event_name === 'user_send_text'){
             let params = {
                 "event_name": "user_send_text",
                 "oa_id": data.sender.id,
@@ -43,6 +43,7 @@ exports.callback = async (req, res, next) => {
             }
             const { body, statusCode } = await request.getAsync(opts);
             if(statusCode){
+                console.log(body.data);
                 let params = {
                     "event_name": "follow",
                     "oa_id": body.data.user_id,
@@ -50,7 +51,19 @@ exports.callback = async (req, res, next) => {
                     "time_send": time_follow
                 };
                 console.log(params);
-                serviceZalo.postAsyncService(url,params);
+                let user = serviceZalo.postAsyncService(url,params);
+                console.log(user);
+                if(this.createUser(body.data)){
+                    return response.success(req, res, {
+                        'err_code': 0,
+                        'msg': 'success'
+                    }, 200);
+                }else {
+                    return response.fail(req, res, {
+                        'err_code': 1,
+                        'msg': e + ''
+                    }, 400);
+                }
             }
         }
 
@@ -118,6 +131,25 @@ exports.saveLog = async (data) => {
             INSERT INTO public.call_logs 
                 (created_at,app_id, sender_id, recipient_id, event_name, message, message_id, time_callback, source, follower_id, oa_id) 
             VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
+            ;`
+
+    let callLogs = await pgsql.query(sql, data_sql);
+    if(callLogs) return true;
+    else return false;
+};
+
+exports.createUser = async (data) => {
+    let created_at = new Date().getTime();
+    var data_sql = [
+        created_at,
+        data.sender && data.sender.id ? data.sender.id : '',
+        data.recipient && data.recipient.id ? data.recipient.id : '',
+        data.status ? data.event_name : '',
+    ];
+    let sql = `
+            INSERT INTO public.call_logs 
+                (created_at,username, password, profile, status, oa_id) 
+            VALUES ($1,$2,$3,$4,$5,$6)
             ;`
 
     let callLogs = await pgsql.query(sql, data_sql);
