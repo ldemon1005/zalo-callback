@@ -12,8 +12,8 @@ const username_admin = process.env.USERNAME || 'tuandao1005@yopmail.com';
 const password_admin = process.env.PASSWORD || 'tuandv1005';
 
 exports.getToken = async (username = '', password = '') => {
-    username !== '' ? username : username = username_admin;
-    password !== '' ? password : password = password_admin;
+    username = username !== '' ? username : username_admin;
+    password = password !== '' ? password : password_admin;
     console.log(username, password)
     let key = 'Callback-Zalo-V2-Token:auth-token:' + username;
     let token = await redis.g(key);
