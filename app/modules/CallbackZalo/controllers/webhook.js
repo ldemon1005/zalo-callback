@@ -58,7 +58,7 @@ exports.callback = async (req, res, next) => {
                     "status" : user.flow__c || 0 ,
                     "oa_id" : body.data.user_id
                 };
-                if(this.createUser(body.data)){
+                if(this.createUser(user_data)){
                     return response.success(req, res, {
                         'err_code': 0,
                         'msg': 'success'
