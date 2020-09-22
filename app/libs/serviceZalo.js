@@ -31,7 +31,6 @@ exports.getToken = async (username = '', password = '') => {
 module.exports = {
     postAsyncService: async (url, params, ContentType='application/json') => {
         let token = await this.getToken();
-        console.log('token', token);
         const opts = {
             headers: {
                 'Authorization': 'Bearer ' + token,
@@ -42,16 +41,12 @@ module.exports = {
             json: true
         };
         const {statusCode, body} = await request.postAsync(opts);
-        console.log("url", url)
-        console.log("params", params)
-        console.log('body:', body);
         return {
             body: body,
             statusCode: statusCode
         };
     },
-    postAsyncZaloService: async (url, params, ContentType='application/json') => {
-
+    postAsyncServiceChatter: async (url, params,token = '', ContentType='application/json') => {
         const opts = {
             headers: {
                 'Authorization': 'Bearer ' + token,
@@ -66,5 +61,5 @@ module.exports = {
             body: body,
             statusCode: statusCode
         };
-    }
+    },
 };

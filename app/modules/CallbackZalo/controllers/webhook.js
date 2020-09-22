@@ -22,16 +22,11 @@ exports.callback = async (req, res, next) => {
         let saveLogs = this.saveLog(data);
         let url = instance_url + '/services/apexrest/ZaloCallback';
         if(data.event_name === 'user_send_text'){
-            let params = {
-                "event_name": "user_send_text",
-                "oa_id": data.sender.id,
-                "data": data.message.text,
-                "time_send": data.timestamp
-            };
-            serviceZalo.postAsyncService(url,params);
+            let user = await this.findUser(data.sender.id);
+            console.log('user: ', user);
         }
 
-        if(data.event_name == 'follow'){
+        if(data.event_name === 'follow'){
             let time_follow = data.timestamp;
 
             let url_zalo = zalo_url + '/getprofile?access_token=' +
@@ -50,7 +45,6 @@ exports.callback = async (req, res, next) => {
                     "time_send": time_follow
                 };
                 let user = await serviceZalo.postAsyncService(url,params);
-                console.log(user);
                 let user_data = {
                     "username" : body.data.user_id + '@yopmail.com',
                     "password" : "zalo@123",
@@ -110,7 +104,6 @@ exports.getCallback = async (req, res, next) => {
 };
 
 exports.getAccessTokenZalo = async (req, res, next) => {
-    //console.log('token: ' + req.query);
     return response.success(req, res, {
         'err_code': 0,
         'msg': 'success'
@@ -153,7 +146,6 @@ exports.createUser = async (data) => {
         data.status,
         data.oa_id
     ];
-    console.log('data_sql: ',data_sql)
     let sql = `
             INSERT INTO public.users 
                 (created_at,username, password, profile, status, oa_id) 
@@ -163,4 +155,13 @@ exports.createUser = async (data) => {
     let users = await pgsql.query(sql, data_sql);
     if(users) return true;
     else return false;
+};
+
+exports.findUser = async (oa_id) => {
+    let created_at = new Date().getTime();
+    var data_sql = [oa_id];
+    let sql = `SELECT * FROM public.users WHERE oa_id = $1;`
+    let users = await pgsql.query(sql, data_sql);
+    if(users) return users;
+    else return null;
 };
