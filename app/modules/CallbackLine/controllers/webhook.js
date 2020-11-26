@@ -9,8 +9,8 @@ const Promise = require("bluebird"), request = Promise.promisifyAll(require('req
 const instance_url = process.env.INSTANCE_URL || 'https://tuandv1005-dev-ed.my.salesforce.com';
 
 const lineConfig = {
-    channelAccessToken: 'YOUR_CHANNEL_ACCESS_TOKEN',
-    channelSecret: 'YOUR_CHANNEL_SECRET'
+    channelAccessToken: process.env.LINE_ACCESS_TOKEN || 'pF/BhXZET4LfQpbk6iG/R43znIAOepdvU14AnMAzcCktZb1H7k1oPary8ucW4RjyNODgpdvUtdxVfw/yQTun13jX9w0Bv/5rhly/O2ESdSdNFR0K3EKk2KA8kIIkzEn5PF74frcaZkBN3NCMsaxoZAdB04t89/1O/w1cDnyilFU=',
+    channelSecret: process.env.LINE_CHANNEL_SECRET || 'eca34475d8b307d64c82a6ed1b42ddf6'
 }
 const client = new line.Client(lineConfig);
 exports.callback = async (req, res, next) => {
