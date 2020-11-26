@@ -14,18 +14,28 @@ const lineConfig = {
 }
 const client = new line.Client(lineConfig);
 exports.callback = async (req, res, next) => {
-    console.log('hello smartosc')
     let created_at = new Date().getTime();
     try {
         const event = req.body.events[0];
-        // console.log('line webhook event: ',event)
+        console.log('line webhook event: ',event)
         switch (event.type) {
             case 'join':
+                await client.replyMessage(event.replyToken, {
+                    type: 'text',
+                    text: 'Hello, Wellcome you!'
+                });
             case 'follow':
+                await client.replyMessage(event.replyToken, {
+                    type: 'text',
+                    text: 'Hello, Wellcome you!'
+                });
             case 'message':
                 switch (event.message.type) {
                     case 'text':
-                        // console.log('event.message.text: ',event.message.text);
+                        await  client.replyMessage(event.replyToken, {
+                            type: 'text',
+                            text: 'Hello, Wellcome you!'
+                        });
                 }
         }
         return response.success(req, res, {
