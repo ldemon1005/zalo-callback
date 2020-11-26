@@ -14,6 +14,7 @@ const lineConfig = {
 }
 const client = new line.Client(lineConfig);
 exports.callback = async (req, res, next) => {
+    console.log('hello smartosc')
     let created_at = new Date().getTime();
     try {
         const event = req.body.events[0];
