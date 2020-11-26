@@ -19,21 +19,20 @@ exports.callback = async (req, res, next) => {
         const event = req.body.events[0];
         console.log('line webhook event: ',event)
         switch (event.type) {
-
             case 'join':
-                await client.replyMessage(event.replyToken, {
+                return client.replyMessage(event.replyToken, {
                     type: 'text',
                     text: 'Hello, Wellcome you!'
                 });
             case 'follow':
-                await client.replyMessage(event.replyToken, {
+                return client.replyMessage(event.replyToken, {
                     type: 'text',
                     text: 'Hello, Wellcome you!'
                 });
             case 'message':
                 switch (event.message.type) {
                     case 'text':
-                        await client.replyMessage(event.replyToken, {
+                        return  client.replyMessage(event.replyToken, {
                             type: 'text',
                             text: 'Hello, Wellcome you!'
                         });
