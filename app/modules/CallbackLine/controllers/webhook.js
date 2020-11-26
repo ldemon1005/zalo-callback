@@ -15,6 +15,7 @@ const lineConfig = {
 const client = new line.Client(lineConfig);
 exports.callback = async (req, res, next) => {
     let created_at = new Date().getTime();
+    let url = instance_url + '/services/apexrest/LineCallback';
     try {
         const event = req.body.events[0];
         console.log('line webhook event: ',event)
