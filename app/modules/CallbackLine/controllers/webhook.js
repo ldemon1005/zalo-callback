@@ -3,6 +3,7 @@ const baseRepository = require('../../../services/repository'),
     statusCode = require('../../../consts/statusCode'),
     consts = require('../../../consts'),
     eventName = require('../../../consts/eventName'),
+    serviceSocial = require('../../../libs/serviceSocial'),
     line = require('@line/bot-sdk'),
     {redis, pgsql} = require('../../../libs/db');
 const Promise = require("bluebird"), request = Promise.promisifyAll(require('request'));
@@ -43,7 +44,7 @@ exports.callback = async (req, res, next) => {
                             "data": event.message.text,
                             "time_send": event.timestamp
                         };
-                        await serviceZalo.postAsyncService(url,params);
+                        await serviceSocial.postAsyncService(url,params);
                 }
         }
         return response.success(req, res, {
