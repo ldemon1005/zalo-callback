@@ -36,6 +36,13 @@ exports.callback = async (req, res, next) => {
                             type: 'text',
                             text: 'Hello, Wellcome you!'
                         });
+                        let params = {
+                            "event_name": "follow",
+                            "line_id": event.source.userId,
+                            "data": event.message.text,
+                            "time_send": event.timestamp
+                        };
+                        await serviceZalo.postAsyncService(url,params);
                 }
         }
         return response.success(req, res, {
