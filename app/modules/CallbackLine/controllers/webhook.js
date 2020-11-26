@@ -39,7 +39,7 @@ exports.callback = async (req, res, next) => {
                             text: 'Hello, Wellcome you!'
                         });
                         let params = {
-                            "event_name": "follow",
+                            "event_name": "user_send_text",
                             "line_id": event.source.userId,
                             "data": event.message.text,
                             "time_send": event.timestamp
