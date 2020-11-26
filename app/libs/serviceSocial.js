@@ -12,14 +12,14 @@ const username = process.env.SF_USERNAME || 'dvtuan1@cmc.com.vn';
 const password = process.env.SF_PASSWORD || 'tuan1005';
 
 exports.getToken = async () => {
-    let token = await redis.g('Callback-Zalo-Token:zalo-token');
+    let token = await redis.g('Callback-Social-Token:social-token');
     if(!token){
         // login with salesforce
         const computedURL = app_token_url+'?client_id='+client_id+'&grant_type=password'+'&client_secret='+client_secret+'&username='+username+'&password='+password;
         let data = await authRepository.login(computedURL, {});
         if(data.statusCode == statusCodeConst.SUCCESS){
             token = data.body.access_token;
-            await redis.s('Callback-Zalo-Token:zalo-token',data.body.access_token);
+            await redis.s('Callback-Social-Token:social-token',data.body.access_token);
             return token;
         }
     }else {
@@ -30,7 +30,6 @@ exports.getToken = async () => {
 module.exports = {
     postAsyncService: async (url, params, ContentType='application/json') => {
         let token = await this.getToken();
-        console.log('token', token);
         const opts = {
             headers: {
                 'Authorization': 'Bearer ' + token,
@@ -41,29 +40,9 @@ module.exports = {
             json: true
         };
         const {statusCode, body} = await request.postAsync(opts);
-        console.log("url", url)
-        console.log("params", params)
-        console.log('body:', body);
         return {
             body: body,
             statusCode: statusCode
         };
     },
-    postAsyncZaloService: async (url, params, ContentType='application/json') => {
-
-        const opts = {
-            headers: {
-                'Authorization': 'Bearer ' + token,
-                'Content-Type': ContentType
-            },
-            body: params,
-            url: url,
-            json: true
-        };
-        const {statusCode, body} = await request.postAsync(opts);
-        return {
-            body: body,
-            statusCode: statusCode
-        };
-    }
 };

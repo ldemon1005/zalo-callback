@@ -16,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@line/bot-sdk": "^7.1.0",
     "bluebird": "^3.5.5",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",

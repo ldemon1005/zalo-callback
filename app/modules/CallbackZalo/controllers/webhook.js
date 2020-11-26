@@ -4,7 +4,7 @@ const baseRepository = require('../../../services/repository'),
     consts = require('../../../consts'),
     eventName = require('../../../consts/eventName'),
     { redis, pgsql } = require('../../../libs/db'),
-    serviceZalo = require('../../../libs/serviceZalo'),
+    serviceZalo = require('../../../libs/serviceSocial'),
     winston = require('../../../configs/winston');
 const Promise = require("bluebird"), request = Promise.promisifyAll(require('request'));
 const instance_url = process.env.INSTANCE_URL || 'https://tuandv1005-dev-ed.my.salesforce.com';
@@ -28,7 +28,7 @@ exports.callback = async (req, res, next) => {
                 "data": data.message.text,
                 "time_send": data.timestamp
             };
-            serviceZalo.postAsyncService(url,params);
+            await serviceZalo.postAsyncService(url, params);
         }
 
         if(data.event_name == 'follow'){
@@ -42,8 +42,6 @@ exports.callback = async (req, res, next) => {
                 json: true
             }
             const { body, statusCode } = await request.getAsync(opts);
-            console.log('statusCode', statusCode);
-            console.log('body', body);
             if(statusCode){
                 let params = {
                     "event_name": "follow",
@@ -51,20 +49,18 @@ exports.callback = async (req, res, next) => {
                     "data": body.data.display_name,
                     "time_send": time_follow
                 };
-                console.log(params);
-                serviceZalo.postAsyncService(url,params);
+                await serviceZalo.postAsyncService(url,params);
             }
         }
 
         if(data.event_name == 'unfollow'){
-            console.log('data', data);
             let params = {
                 "event_name": "unfollow",
                 "oa_id": data.follower.id,
                 "data": '',
                 "time_send": data.timestamp
             };
-            serviceZalo.postAsyncService(url,params);
+            await serviceZalo.postAsyncService(url,params);
         }
         if(saveLogs) {
             return response.success(req, res, {
