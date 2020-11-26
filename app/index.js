@@ -48,6 +48,8 @@ const ccWebhookRoutes = require('./modules/CallCenter/routes/webhook');
 app.use(`/${VERSION}/cc`, ccWebhookRoutes);
 const zaloWebhookRoutes = require('./modules/CallbackZalo/routes/webhook');
 app.use(`/${VERSION}/zalo`, zaloWebhookRoutes);
+const lineWebhookRoutes = require('./modules/CallbackLine/routes/webhook');
+app.use(`/${VERSION}/line`, lineWebhookRoutes);
 const authRoutes = require('./routes/auth');
 app.use(`/${VERSION}/auth`, authRoutes);
 
