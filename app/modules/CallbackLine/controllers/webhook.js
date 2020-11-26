@@ -20,24 +20,28 @@ exports.callback = async (req, res, next) => {
         console.log('line webhook event: ',event)
         switch (event.type) {
             case 'join':
-                return client.replyMessage(event.replyToken, {
+                await client.replyMessage(event.replyToken, {
                     type: 'text',
                     text: 'Hello, Wellcome you!'
                 });
             case 'follow':
-                return client.replyMessage(event.replyToken, {
+                await client.replyMessage(event.replyToken, {
                     type: 'text',
                     text: 'Hello, Wellcome you!'
                 });
             case 'message':
                 switch (event.message.type) {
                     case 'text':
-                        return  client.replyMessage(event.replyToken, {
+                        await  client.replyMessage(event.replyToken, {
                             type: 'text',
                             text: 'Hello, Wellcome you!'
                         });
                 }
         }
+        return response.success(req, res, {
+            'err_code': 0,
+            'msg': 'success'
+        }, 200);
     } catch (e) {
         let error = e + '';
         redis.s('Callback-Line-Error:' + created_at, error);
