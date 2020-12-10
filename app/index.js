@@ -80,4 +80,27 @@ app.use((error, req, res, next) => {
 	next();
 });
 
+
+//<editor-fold desc="platform event salesforce">
+const jsforce = require('jsforce');
+
+const username = 'salesforce@smartosc.vn.tuan';
+const password = 'tuandv1005';
+
+const conn = new jsforce.Connection({
+	loginUrl : 'https://test.salesforce.com'
+});
+conn.login(username, password, function(err, res) {
+	if (err) {
+		return console.error(err);
+	}
+
+	console.log('Authenticated');
+
+	conn.streaming.topic("/event/Smart__e").subscribe(function(message) {
+		console.log('Event : ' + JSON.stringify(message));
+	});
+});
+//</editor-fold>
+
 module.exports = app;
