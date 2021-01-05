@@ -12,6 +12,15 @@
             }
         };
 
+        var listener = function(payload) {
+            console.log('Clicked phone number: ' + payload.number);
+        };
+        // Register the listener.
+        window.addEventListener('load', function() {
+            sforce.opencti.onClickToDial({listener: listener});
+        });
+
+
 
         function getAppViewInfo() {
             sforce.opencti.getAppViewInfo({callback: callback});
