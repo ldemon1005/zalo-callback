@@ -4,21 +4,18 @@
     <script src="https://cmc23-dev-ed.lightning.force.com/support/api/50.0/lightning/opencti_min.js"></script>
     <script src="https://cmc23-dev-ed.lightning.force.com/support/api/50.0/interaction.js"></script>
     <script type="text/javascript">
-        // Callback of API method: isInConsole
-        var isInConsoleCallback = function (response) {
-            console.log('i come here');
-            // Returns true if method is executed in Salesforce console, false otherwise.
-            if (response.result) {
-                alert('Softphone is in Salesforce console.');
-            }
-            else {
-                alert('Softphone is not in Salesforce console.');
-            }
-        };
-
         // Invokes API method: isInConsole
         function isInConsole() {
-            sforce.interaction.isInConsole(isInConsoleCallback);
+            sforce.interaction.isInConsole( (response) =>{
+                console.log('i come here');
+                // Returns true if method is executed in Salesforce console, false otherwise.
+                if (response.result) {
+                    alert('Softphone is in Salesforce console.');
+                }
+                else {
+                    alert('Softphone is not in Salesforce console.');
+                }
+            });
             console.log('i come here 1')
         }
         // Callback of API method: getCallCenterSettings
