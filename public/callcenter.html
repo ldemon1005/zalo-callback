@@ -12,13 +12,19 @@
             }
         };
 
+
         function getAppViewInfo() {
             sforce.opencti.getAppViewInfo({callback: callback});
+        }
+
+        function enableClickToDial() {
+            sforce.opencti.enableClickToDial({callback: callback});
         }
     </script>
 </head>
 <body>
     <button onclick="getAppViewInfo();">getAppViewInfo()</button>
+    <button onclick="enableClickToDial();">enableClickToDial()</button>
 </body>
 
 </html>
