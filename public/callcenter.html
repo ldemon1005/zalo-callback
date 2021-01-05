@@ -6,6 +6,7 @@
     <script type="text/javascript">
         // Callback of API method: isInConsole
         var isInConsoleCallback = function (response) {
+            console.log('i come here');
             // Returns true if method is executed in Salesforce console, false otherwise.
             if (response.result) {
                 alert('Softphone is in Salesforce console.');
@@ -17,8 +18,8 @@
 
         // Invokes API method: isInConsole
         function isInConsole() {
-            console.log(sforce);
             sforce.interaction.isInConsole(isInConsoleCallback);
+            console.log('i come here 1')
         }
         // Callback of API method: getCallCenterSettings
         var getCallCenterSettingsCallback = function (response) {
