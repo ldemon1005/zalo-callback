@@ -1,10 +1,8 @@
-define([
-    'postmonger'
-], function(
-    Postmonger
-) {
+define( function(require) {
     'use strict';
 
+    var Postmonger = require( 'postmonger' );
+    var $ = require( 'vendor/jquery.min' );
     var connection = new Postmonger.Session();
     var payload = {};
     var lastStepEnabled = false;
