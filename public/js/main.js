@@ -4,12 +4,14 @@ requirejs.config({
 		postmonger: 'vendor/postmonger'
     },
     shim: {
+        //<editor-fold desc="hello">
         'vendor/jquery.min': {
             exports: '$'
         },
 		'portalweb': {
 			deps: ['vendor/jquery.min', 'vendor/postmonger']
 		}
+        //</editor-fold>
     }
 });
 

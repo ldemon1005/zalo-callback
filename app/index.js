@@ -84,23 +84,28 @@ app.use((error, req, res, next) => {
 //<editor-fold desc="platform event salesforce">
 const jsforce = require('jsforce');
 
-const username = 'salesforce@smartosc.vn.tuan';
-const password = 'tuandv1005';
+// const username = 'salesforce@smartosc.vn.tuan';
+// const password = 'tuandv1005';
+//
+// const conn = new jsforce.Connection({
+// 	loginUrl : 'https://test.salesforce.com'
+// });
+// conn.login(username, password, function(err, res) {
+// 	if (err) {
+// 		return console.error(err);
+// 	}
+//
+// 	console.log('Authenticated');
+//
+// 	conn.streaming.topic("/event/Smart__e").subscribe(function(message) {
+// 		console.log('Event : ' + JSON.stringify(message));
+// 	});
+// });
+// //</editor-fold>
 
-const conn = new jsforce.Connection({
-	loginUrl : 'https://test.salesforce.com'
-});
-conn.login(username, password, function(err, res) {
-	if (err) {
-		return console.error(err);
-	}
+//
+// OAuth2 client information can be shared with multiple connections.
+//
 
-	console.log('Authenticated');
-
-	conn.streaming.topic("/event/Smart__e").subscribe(function(message) {
-		console.log('Event : ' + JSON.stringify(message));
-	});
-});
-//</editor-fold>
 
 module.exports = app;

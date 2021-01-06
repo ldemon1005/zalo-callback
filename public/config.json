@@ -1,76 +1,90 @@
 {
   "workflowApiVersion": "1.1",
   "metaData": {
-    "version": "2.0",
-    "icon": "images/jb-icon.png",
-    "iconSmall": "images/jb-icon.png"
+    "icon": "images/sms.png",
+    "category": "message"
   },
   "type": "REST",
   "lang": {
     "en-US": {
-      "name": "Portal WEB",
-      "description": "Prueba de portal web"
+      "name": "REST Activity (Workflow API v1.1)",
+      "description": "An example REST activity using workflow API v1.1 format."
     }
   },
   "arguments": {
     "execute": {
-      "inArguments":[
-        { "idUser": "{{Contact.Attribute.Capacitacion-Clientes-Sergio.IdCliente}}"},
-        { "idCampana": "{{Contact.Attribute.Capacitacion-Clientes-Sergio.Nombre}}"}
+      "inArguments": [
+        {
+          "emailAddress": "{{InteractionDefaults.Email}}"
+        },
+        {
+          "phoneNumber": "{{Contact.Default.PhoneNumber}}"
+        }
       ],
       "outArguments": [
-        { "exitoso":"boolean" }
+        {
+          "foundSignupDate": ""
+        }
       ],
-      "url": "https://marketing-cloud-ws-dev.herokuapp.com/ixn/activities/portalweb/execute/",
-      "verb": "POST",
-      "body": "",
-      "header": "",
-      "format": "json",
-      "useJwt": false,
-      "timeout": 10000
+      "url": "https://some-endpoint.com/execute"
     }
   },
   "configurationArguments": {
-    "applicationExtensionKey": "ecad721b-9645-4d52-ba4e-03ad3a03051e",
-    "defaults": { "priority": "4"},
     "save": {
-      "url": "https://marketing-cloud-ws-dev.herokuapp.com/ixn/activities/portalweb/save/",
-      "body": "",
-      "verb": "POST",
-      "useJwt": false
+      "url": "URI/for/your/activity/save"
     },
     "publish": {
-      "url": "https://marketing-cloud-ws-dev.herokuapp.com/ixn/activities/portalweb/publish/",
-      "verb": "POST",
-      "body": "",
-      "useJwt": false
+      "url": "URI/for/your/activity/publish"
     },
     "validate": {
-      "url": "https://marketing-cloud-ws-dev.herokuapp.com/ixn/activities/portalweb/validate/",
-      "verb": "POST",
-      "body": "",
-      "useJwt": false
+      "url": "URI/for/your/activity/validate"
+    },
+    "stop": {
+      "url": "URI/for/your/activity/stop"
+    }
+  },
+  "wizardSteps": [
+    { "label": "Step 1", "key": "step1" },
+    { "label": "Step 2", "key": "step2" },
+    { "label": "Step 3", "key": "step3" },
+    { "label": "Step 4", "key": "step4", "active": false }
+  ],
+  "userInterfaces": {
+    "configModal": {
+      "height": 200,
+      "width": 300,
+      "fullscreen": true
     }
   },
   "schema": {
     "arguments": {
       "execute": {
+        "inArguments": [
+          {
+            "phoneNumber": {
+              "dataType": "Phone",
+              "isNullable": false,
+              "direction": "in"
+            }
+          },
+          {
+            "emailAddress": {
+              "dataType": "Email",
+              "isNullable": false,
+              "direction": "in"
+            }
+          }
+        ],
         "outArguments": [
           {
-            "key": {
-              "dataType": "Text",
-              "isNullable": false,
-              "access": "Visible",
-              "direction": "Out"
+            "foundSignupDate": {
+              "dataType": "Date",
+              "direction": "out",
+              "access": "visible"
             }
           }
         ]
       }
     }
-  },
-  "edit": {
-    "url": "https://marketing-cloud-ws-dev.herokuapp.com/ixn/activities/portalweb/",
-    "height": 400,
-    "width": 500
   }
 }
