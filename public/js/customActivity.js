@@ -1,7 +1,7 @@
 define( function(require) {
     'use strict';
 
-    var Postmonger = require( 'postmonger' );
+    var Postmonger = require( 'vendor/postmonger' );
     var $ = require( 'vendor/jquery.min' );
     var connection = new Postmonger.Session();
     var payload = {};
