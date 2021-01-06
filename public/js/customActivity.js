@@ -1,5 +1,5 @@
 define([
-    'vendor/postmonger'
+    'postmonger'
 ], function(
     Postmonger
 ) {
