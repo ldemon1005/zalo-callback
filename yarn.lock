@@ -1564,6 +1564,11 @@ postgres-interval@^1.1.0:
   dependencies:
     xtend "^4.0.0"
 
+postmonger@^0.0.16:
+  version "0.0.16"
+  resolved "https://registry.yarnpkg.com/postmonger/-/postmonger-0.0.16.tgz#f93a9c78cfb69c3a8cf7c7494c8c5be09dbe0bf7"
+  integrity sha1-+TqceM+2nDqM98dJTIxb4J2+C/c=
+
 process-nextick-args@~2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.1.tgz#7820d9b16120cc55ca9ae7792680ae7dba6d7fe2"

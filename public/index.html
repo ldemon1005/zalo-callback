@@ -7,6 +7,7 @@
 
 	<script type="text/javascript" src="vendor/jquery.min.js"></script>
 	<script type="text/javascript" src="js/require.js"></script>
+	<link rel="stylesheet" type="text/css" href="vendor/slds/styles/salesforce-lightning-design-system.css" />
 	<script type="text/javascript">
 		(function() {
 			var config = {
@@ -37,7 +38,253 @@
 
 </head>
 <body>
-<div id="step1" class="step">
+<div class="demo-only" style="min-height:180px">
+	<div class="slds-form-element">
+		<div class="slds-form-element__control">
+			<div class="slds-rich-text-editor slds-grid slds-grid_vertical slds-nowrap">
+				<div role="toolbar" class="slds-rich-text-editor__toolbar slds-shrink-none">
+					<div class="slds-grid slds-rich-text-editor__spacing-wrapper" role="group" aria-label="Format font family &amp; size">
+						<div class="slds-rich-text-editor__select">
+							<div class="slds-form-element">
+								<label class="slds-form-element__label slds-assistive-text" for="font-family">Choose a Font</label>
+								<div class="slds-form-element__control">
+									<div class="slds-combobox_container">
+										<div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-rich-text-editor__select_x-small" aria-expanded="false" aria-haspopup="listbox" role="combobox">
+											<div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+												<input type="text" class="slds-input slds-combobox__input slds-combobox__input-value" id="font-family" aria-controls="family-listbox" autoComplete="off" role="textbox" placeholder="Select an Option…" readonly="" value="Font" />
+												<span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right" title="Description of icon when needed">
+                          <svg class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default" aria-hidden="true">
+                            <use xlink:href="vendor/slds/icons/utility-sprite/svg/symbols.svg#down"></use>
+                          </svg>
+                          <span class="slds-assistive-text">Description of icon when needed</span>
+                        </span>
+											</div>
+											<div id="family-listbox" role="listbox" class="slds-dropdown slds-dropdown_fluid">
+												<ul class="slds-listbox slds-listbox_vertical" role="presentation">
+													<li role="presentation" class="slds-listbox__item">
+														<div id="listbox-option-unique-id-01" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center" role="option">
+                              <span class="slds-media__body">
+                                <span class="slds-truncate" title="Times New Roman"> Times New Roman</span>
+                              </span>
+														</div>
+													</li>
+													<li role="presentation" class="slds-listbox__item">
+														<div id="listbox-option-unique-id-02" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center" role="option">
+                              <span class="slds-media__body">
+                                <span class="slds-truncate" title="Arial"> Arial</span>
+                              </span>
+														</div>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="slds-rich-text-editor__select">
+							<div class="slds-form-element">
+								<label class="slds-form-element__label slds-assistive-text" for="font-size">Choose a Font Size</label>
+								<div class="slds-form-element__control">
+									<div class="slds-combobox_container">
+										<div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-rich-text-editor__select_xx-small" aria-expanded="false" aria-haspopup="listbox" role="combobox">
+											<div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+												<input type="text" class="slds-input slds-combobox__input slds-combobox__input-value" id="font-size" aria-controls="size-listbox" autoComplete="off" role="textbox" placeholder="Select an Option…" readonly="" tabindex="-1" value="Size"
+												/>
+												<span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right" title="Description of icon when needed">
+                          <svg class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default" aria-hidden="true">
+                            <use xlink:href="vendor/slds/icons/utility-sprite/svg/symbols.svg#down"></use>
+                          </svg>
+                          <span class="slds-assistive-text">Description of icon when needed</span>
+                        </span>
+											</div>
+											<div id="size-listbox" role="listbox" class="slds-dropdown slds-dropdown_fluid">
+												<ul class="slds-listbox slds-listbox_vertical" role="presentation">
+													<li role="presentation" class="slds-listbox__item">
+														<div id="listbox-option-unique-id-03" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center" role="option">
+                              <span class="slds-media__body">
+                                <span class="slds-truncate" title="12px"> 12px</span>
+                              </span>
+														</div>
+													</li>
+													<li role="presentation" class="slds-listbox__item">
+														<div id="listbox-option-unique-id-04" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center" role="option">
+                              <span class="slds-media__body">
+                                <span class="slds-truncate" title="14px"> 14px</span>
+                              </span>
+														</div>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<ul aria-label="Format text" class="slds-button-group-list">
+						<li>
+							<button class="slds-button slds-button_icon slds-button_icon-border-filled" tabindex="-1">
+								<svg class="slds-button__icon" aria-hidden="true">
+									<use xlink:href="vendor/slds/icons/utility-sprite/svg/symbols.svg#bold"></use>
+								</svg>
+								<span class="slds-assistive-text">Bold</span>
+							</button>
+						</li>
+						<li>
+							<button class="slds-button slds-button_icon slds-button_icon-border-filled" tabindex="-1">
+								<svg class="slds-button__icon" aria-hidden="true">
+									<use xlink:href="vendor/slds/icons/utility-sprite/svg/symbols.svg#italic"></use>
+								</svg>
+								<span class="slds-assistive-text">Italic</span>
+							</button>
+						</li>
+						<li>
+							<button class="slds-button slds-button_icon slds-button_icon-border-filled" tabindex="-1">
+								<svg class="slds-button__icon" aria-hidden="true">
+									<use xlink:href="vendor/slds/icons/utility-sprite/svg/symbols.svg#underline"></use>
+								</svg>
+								<span class="slds-assistive-text">Underline</span>
+							</button>
+						</li>
+						<li>
+							<button class="slds-button slds-button_icon slds-button_icon-border-filled" tabindex="-1">
+								<svg class="slds-button__icon" aria-hidden="true">
+									<use xlink:href="vendor/slds/icons/utility-sprite/svg/symbols.svg#strikethrough"></use>
+								</svg>
+								<span class="slds-assistive-text">Strike Through</span>
+							</button>
+						</li>
+					</ul>
+					<ul aria-label="Format background &amp; text color" class="slds-button-group-list">
+						<li>
+							<button tabindex="-1" class="slds-button slds-button_icon slds-button_icon-more slds-button_icon-more-filled" aria-haspopup="true">
+								<svg class="slds-button__icon" aria-hidden="true">
+									<use xlink:href="vendor/slds/icons/utility-sprite/svg/symbols.svg#text_background_color"></use>
+								</svg>
+								<svg class="slds-button__icon slds-button__icon_x-small" aria-hidden="true">
+									<use xlink:href="vendor/slds/icons/utility-sprite/svg/symbols.svg#down"></use>
+								</svg>
+								<span class="slds-assistive-text">Background Color</span>
+							</button>
+						</li>
+						<li>
+							<button tabindex="-1" class="slds-button slds-button_icon slds-button_icon-more slds-button_icon-more-filled" aria-haspopup="true">
+								<svg class="slds-button__icon" aria-hidden="true">
+									<use xlink:href="vendor/slds/icons/utility-sprite/svg/symbols.svg#text_color"></use>
+								</svg>
+								<svg class="slds-button__icon slds-button__icon_x-small" aria-hidden="true">
+									<use xlink:href="vendor/slds/icons/utility-sprite/svg/symbols.svg#down"></use>
+								</svg>
+								<span class="slds-assistive-text">Text Color</span>
+							</button>
+						</li>
+					</ul>
+					<ul aria-label="Format body" class="slds-button-group-list">
+						<li>
+							<button class="slds-button slds-button_icon slds-button_icon-border-filled" tabindex="-1">
+								<svg class="slds-button__icon" aria-hidden="true">
+									<use xlink:href="vendor/slds/icons/utility-sprite/svg/symbols.svg#richtextbulletedlist"></use>
+								</svg>
+								<span class="slds-assistive-text">Bulleted List</span>
+							</button>
+						</li>
+						<li>
+							<button class="slds-button slds-button_icon slds-button_icon-border-filled" tabindex="-1">
+								<svg class="slds-button__icon" aria-hidden="true">
+									<use xlink:href="vendor/slds/icons/utility-sprite/svg/symbols.svg#richtextnumberedlist"></use>
+								</svg>
+								<span class="slds-assistive-text">Numbered List</span>
+							</button>
+						</li>
+						<li>
+							<button class="slds-button slds-button_icon slds-button_icon-border-filled" tabindex="-1">
+								<svg class="slds-button__icon" aria-hidden="true">
+									<use xlink:href="vendor/slds/icons/utility-sprite/svg/symbols.svg#richtextindent"></use>
+								</svg>
+								<span class="slds-assistive-text">Indent</span>
+							</button>
+						</li>
+						<li>
+							<button class="slds-button slds-button_icon slds-button_icon-border-filled" tabindex="-1">
+								<svg class="slds-button__icon" aria-hidden="true">
+									<use xlink:href="vendor/slds/icons/utility-sprite/svg/symbols.svg#richtextoutdent"></use>
+								</svg>
+								<span class="slds-assistive-text">Outdent</span>
+							</button>
+						</li>
+					</ul>
+					<ul aria-label="Align text" class="slds-button-group-list">
+						<li>
+							<button class="slds-button slds-button_icon slds-button_icon-border-filled" tabindex="-1">
+								<svg class="slds-button__icon" aria-hidden="true">
+									<use xlink:href="vendor/slds/icons/utility-sprite/svg/symbols.svg#left_align_text"></use>
+								</svg>
+								<span class="slds-assistive-text">Left Align Text</span>
+							</button>
+						</li>
+						<li>
+							<button class="slds-button slds-button_icon slds-button_icon-border-filled" tabindex="-1">
+								<svg class="slds-button__icon" aria-hidden="true">
+									<use xlink:href="vendor/slds/icons/utility-sprite/svg/symbols.svg#center_align_text"></use>
+								</svg>
+								<span class="slds-assistive-text">Center Align Text</span>
+							</button>
+						</li>
+						<li>
+							<button class="slds-button slds-button_icon slds-button_icon-border-filled" tabindex="-1">
+								<svg class="slds-button__icon" aria-hidden="true">
+									<use xlink:href="vendor/slds/icons/utility-sprite/svg/symbols.svg#right_align_text"></use>
+								</svg>
+								<span class="slds-assistive-text">Right Align Text</span>
+							</button>
+						</li>
+					</ul>
+					<ul aria-label="Insert content" class="slds-button-group-list">
+						<li>
+							<button class="slds-button slds-button_icon slds-button_icon-border-filled" tabindex="-1">
+								<svg class="slds-button__icon" aria-hidden="true">
+									<use xlink:href="vendor/slds/icons/utility-sprite/svg/symbols.svg#emoji"></use>
+								</svg>
+								<span class="slds-assistive-text">Add Emoji</span>
+							</button>
+						</li>
+						<li>
+							<button class="slds-button slds-button_icon slds-button_icon-border-filled" tabindex="-1">
+								<svg class="slds-button__icon" aria-hidden="true">
+									<use xlink:href="vendor/slds/icons/utility-sprite/svg/symbols.svg#image"></use>
+								</svg>
+								<span class="slds-assistive-text">Add Image</span>
+							</button>
+						</li>
+						<li>
+							<button class="slds-button slds-button_icon slds-button_icon-border-filled" tabindex="-1">
+								<svg class="slds-button__icon" aria-hidden="true">
+									<use xlink:href="vendor/slds/icons/utility-sprite/svg/symbols.svg#link"></use>
+								</svg>
+								<span class="slds-assistive-text">Add Link</span>
+							</button>
+						</li>
+					</ul>
+					<ul aria-label="Remove Formatting" class="slds-button-group-list">
+						<li>
+							<button class="slds-button slds-button_icon slds-button_icon-border-filled" tabindex="-1">
+								<svg class="slds-button__icon" aria-hidden="true">
+									<use xlink:href="vendor/slds/icons/utility-sprite/svg/symbols.svg#remove_formatting"></use>
+								</svg>
+								<span class="slds-assistive-text">Remove Formatting</span>
+							</button>
+						</li>
+					</ul>
+				</div>
+				<div class="slds-rich-text-editor__textarea slds-grid">
+					<div aria-label="Compose email" contenteditable="true" class="slds-rich-text-area__content slds-text-color_weak slds-grow">Compose Email...</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--<div id="step1" class="step">
 
 	Select your SMS message:
 	<select id="select1">
@@ -58,6 +305,6 @@
 </div>
 <div id="step4" class="step">
 	Hey, here's a fourth step, just for you.  Toggle this on or off from step 1.
-</div>
+</div>-->
 </body>
 </html>
