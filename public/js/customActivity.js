@@ -55,6 +55,7 @@ define([
 
         let oa_id;
         let access_token;
+        let message;
         var hasInArguments = Boolean(
             payload['arguments'] &&
             payload['arguments'].execute &&
@@ -72,12 +73,16 @@ define([
                 if (key === 'access_token') {
                     access_token = val;
                 }
+                if (key === 'message') {
+                    message = val;
+                }
             });
         });
 
         if (oa_id && access_token) {
             $('#oa_id').val(oa_id);
             $('#access_token').val(access_token);
+            $('#message').val(message);
         } else {
             connection.trigger('updateButton', { button: 'next', enabled: false });
         }
@@ -132,7 +137,6 @@ define([
     }
 
     function save() {
-        var name = $('#select1').find('option:selected').html();
         var access_token = $('#access_token').val();
         var oa_id = $('#oa_id').val();
         var message = $('#message').val();
