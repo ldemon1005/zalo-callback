@@ -10,9 +10,7 @@ define([
     var lastStepEnabled = false;
     var steps = [ // initialize to the same value as what's set in config.json for consistency
         { "label": "Step 1", "key": "step1" },
-        { "label": "Step 2", "key": "step2" },
-        { "label": "Step 3", "key": "step3" },
-        { "label": "Step 4", "key": "step4", "active": false }
+        { "label": "Step 2", "key": "step2" }
     ];
     var currentStep = steps[0].key;
 
@@ -56,7 +54,8 @@ define([
             payload = data;
         }
 
-        var message;
+        let oa_id;
+        let access_token;
         var hasInArguments = Boolean(
             payload['arguments'] &&
             payload['arguments'].execute &&
@@ -68,22 +67,22 @@ define([
 
         $.each(inArguments, function(index, inArgument) {
             $.each(inArgument, function(key, val) {
-                if (key === 'message') {
-                    message = val;
+                if (key === 'oa_id') {
+                    oa_id = val;
+                }
+                if (key === 'access_token') {
+                    access_token = val;
                 }
             });
         });
 
-        // If there is no message selected, disable the next button
-        if (!message) {
-            showStep(null, 1);
-            connection.trigger('updateButton', { button: 'next', enabled: false });
-            // If there is a message, skip to the summary step
+        if (oa_id && access_token) {
+            $('#oa_id').val(oa_id);
+            $('#access_token').val(access_token);
         } else {
-            $('#select1').find('option[value='+ message +']').attr('selected', 'selected');
-            $('#message').html(message);
-            showStep(null, 3);
+            connection.trigger('updateButton', { button: 'next', enabled: false });
         }
+        showStep(null, 1);
     }
 
     function onGetTokens (tokens) {
@@ -97,14 +96,7 @@ define([
     }
 
     function onClickedNext () {
-        if (
-            (currentStep.key === 'step3' && steps[3].active === false) ||
-            currentStep.key === 'step4'
-        ) {
-            save();
-        } else {
-            connection.trigger('nextStep');
-        }
+        save();
     }
 
     function onClickedBack () {
@@ -130,7 +122,7 @@ define([
                 $('#step1').show();
                 connection.trigger('updateButton', {
                     button: 'next',
-                    enabled: Boolean(getMessage())
+                    enabled: true
                 });
                 connection.trigger('updateButton', {
                     button: 'back',
@@ -149,35 +141,14 @@ define([
                     visible: true
                 });
                 break;
-            case 'step3':
-                $('#step3').show();
-                connection.trigger('updateButton', {
-                    button: 'back',
-                    visible: true
-                });
-                if (lastStepEnabled) {
-                    connection.trigger('updateButton', {
-                        button: 'next',
-                        text: 'next',
-                        visible: true
-                    });
-                } else {
-                    connection.trigger('updateButton', {
-                        button: 'next',
-                        text: 'done',
-                        visible: true
-                    });
-                }
-                break;
-            case 'step4':
-                $('#step4').show();
-                break;
         }
     }
 
     function save() {
         var name = $('#select1').find('option:selected').html();
-        var value = getMessage();
+        var access_token = $('#access_token').val();
+        var oa_id = $('#oa_id').val();
+        var message = $('#message').val();
 
         // 'payload' is initialized on 'initActivity' above.
         // Journey Builder sends an initial payload with defaults
@@ -185,15 +156,14 @@ define([
         // may be overridden as desired.
         payload.name = name;
 
-        payload['arguments'].execute.inArguments = [{ "message": value }];
+        payload['arguments'].execute.inArguments = [
+            {"oa_id": oa_id},
+            {"access_token": access_token},
+            {"message": message}
+        ];
 
         payload['metaData'].isConfigured = true;
 
         connection.trigger('updateActivity', payload);
     }
-
-    function getMessage() {
-        return $('#select1').find('option:selected').attr('value').trim();
-    }
-
 });
