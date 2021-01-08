@@ -16,7 +16,7 @@
     "execute": {
       "inArguments": [
         {
-          "LastName": "{{Contact.Default.LastName}}"
+          "phoneNumber": "{{Contact.Default.LastName}}"
         }
       ],
       "outArguments": [
@@ -60,8 +60,8 @@
       "execute": {
         "inArguments": [
           {
-            "LastName": {
-              "dataType": "String",
+            "phoneNumber": {
+              "dataType": "Phone",
               "isNullable": false,
               "direction": "in"
             }
