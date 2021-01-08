@@ -16,7 +16,7 @@
     "execute": {
       "inArguments": [
         {
-          "phoneNumber": "{{Contact.Default.LastName}}"
+          "LastName": "{{Contact.Default.LastName}}"
         }
       ],
       "outArguments": [
