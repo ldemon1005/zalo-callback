@@ -16,7 +16,7 @@
     "execute": {
       "inArguments": [
         {
-          "FullName": "{{Contact.Key}}"
+          "FullName": "{{FirstName}} {{LastName}}"
         }
       ],
       "outArguments": [
