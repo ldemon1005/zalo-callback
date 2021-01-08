@@ -16,7 +16,7 @@
     "execute": {
       "inArguments": [
         {
-          "FullName": "{{Contact.Attribute.Persona.FirstName}} {{Contact.Attribute.Persona.LastName}}"
+          "FullName": "Dao Tuan"
         }
       ],
       "outArguments": [
