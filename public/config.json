@@ -16,7 +16,7 @@
     "execute": {
       "inArguments": [
         {
-          "phoneNumber": "{{Contact.Default.LastName}}"
+          "FullName": "{{Contact.Attribute.Persona.FirstName}} {{Contact.Attribute.Persona.LastName}}"
         }
       ],
       "outArguments": [
@@ -53,37 +53,6 @@
       "height": 200,
       "width": 300,
       "fullscreen": true
-    }
-  },
-  "schema": {
-    "arguments": {
-      "execute": {
-        "inArguments": [
-          {
-            "phoneNumber": {
-              "dataType": "Phone",
-              "isNullable": false,
-              "direction": "in"
-            }
-          },
-          {
-            "emailAddress": {
-              "dataType": "Email",
-              "isNullable": false,
-              "direction": "in"
-            }
-          }
-        ],
-        "outArguments": [
-          {
-            "foundSignupDate": {
-              "dataType": "Date",
-              "direction": "out",
-              "access": "visible"
-            }
-          }
-        ]
-      }
     }
   }
 }
