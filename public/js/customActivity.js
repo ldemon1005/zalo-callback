@@ -67,19 +67,15 @@ define([
 
         $.each(inArguments, function(index, inArgument) {
             $.each(inArgument, function(key, val) {
-                if (key === 'oa_id') {
-                    oa_id = val;
-                }
-                if (key === 'access_token') {
-                    access_token = val;
-                }
-                if (key === 'message') {
-                    message = val;
+                if (key === 'config') {
+                    oa_id = val.oa_id;
+                    access_token = val.access_token;
+                    message = val.message;
                 }
             });
         });
 
-        if (oa_id && access_token) {
+        if (oa_id && access_token && message) {
             $('#oa_id').val(oa_id);
             $('#access_token').val(access_token);
             $('#message').val(message);
@@ -148,19 +144,15 @@ define([
         payload.name = 'Zalo Message';
 
         if(typeof Array.isArray(payload['arguments'].execute.inArguments) === 'undefined'){
-            payload['arguments'].execute.inArguments = [
-                {"oa_id": oa_id},
-                {"access_token": access_token},
-                {"message": message}
-            ];
-        } else {
-            payload['arguments'].execute.inArguments.push(
-                {"oa_id": oa_id},
-                {"access_token": access_token},
-                {"message": message}
-            )
+            payload['arguments'].execute.inArguments = [];
         }
-
+        payload['arguments'].execute.inArguments.push({
+            "config": {
+                "oa_id": oa_id,
+                "access_token": access_token,
+                "message": message
+            }
+        });
 
         payload['metaData'].isConfigured = true;
 
