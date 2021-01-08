@@ -16,7 +16,7 @@
     "execute": {
       "inArguments": [
         {
-          "FullName": "{{Event.DEAudience-32b57e62-6437-c201-937c-c6963ae7de56.LastName}}"
+          "FullName": "{{Contact.Default.LastName}}"
         }
       ],
       "outArguments": [
