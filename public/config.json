@@ -25,6 +25,8 @@
         }
       ],
       "verb": "POST",
+      "useJwt": false,
+      "timeout": 10000,
       "url": "https://zalo-call-back.herokuapp.com/v46.0/marketing-cloud/zalo/sendMessage"
     }
   },
