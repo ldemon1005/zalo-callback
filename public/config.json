@@ -16,7 +16,7 @@
     "execute": {
       "inArguments": [
         {
-          "phoneNumber": "{{Contact.name}}"
+          "phoneNumber": "0354214164"
         }
       ],
       "outArguments": [
