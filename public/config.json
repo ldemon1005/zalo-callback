@@ -18,7 +18,7 @@
           "emailAddress": "{{InteractionDefaults.Email}}"
         },
         {
-          "phoneNumber": "{{Contact.Default.PhoneNumber}}"
+          "phoneNumber": "{{Contact.name}}"
         }
       ],
       "outArguments": [
