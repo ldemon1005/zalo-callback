@@ -28,6 +28,7 @@
     }
   },
   "configurationArguments": {
+    "applicationExtensionKey": "Zalo-message-v1",
     "save": {
       "url": "https://zalo-call-back.herokuapp.com/v46.0/marketing-cloud/zalo/sendMessage"
     },
