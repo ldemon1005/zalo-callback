@@ -147,11 +147,20 @@ define([
         // may be overridden as desired.
         payload.name = 'Zalo Message';
 
-        payload['arguments'].execute.inArguments = [
-            {"oa_id": oa_id},
-            {"access_token": access_token},
-            {"message": message}
-        ];
+        if(typeof Array.isArray(payload['arguments'].execute.inArguments) === 'undefined'){
+            payload['arguments'].execute.inArguments = [
+                {"oa_id": oa_id},
+                {"access_token": access_token},
+                {"message": message}
+            ];
+        } else {
+            payload['arguments'].execute.inArguments.push(
+                {"oa_id": oa_id},
+                {"access_token": access_token},
+                {"message": message}
+            )
+        }
+
 
         payload['metaData'].isConfigured = true;
 
