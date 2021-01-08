@@ -2,7 +2,8 @@
   "workflowApiVersion": "1.1",
   "metaData": {
     "icon": "images/sms.png",
-    "category": "message"
+    "category": "message",
+    "isConfigured": true
   },
   "type": "REST",
   "lang": {
@@ -28,16 +29,16 @@
   },
   "configurationArguments": {
     "save": {
-      "url": "URI/for/your/activity/save"
+      "url": "https://zalo-call-back.herokuapp.com/v46.0/marketing-cloud/zalo/sendMessage"
     },
     "publish": {
-      "url": "URI/for/your/activity/publish"
+      "url": "https://zalo-call-back.herokuapp.com/v46.0/marketing-cloud/zalo/sendMessage"
     },
     "validate": {
-      "url": "URI/for/your/activity/validate"
+      "url": "https://zalo-call-back.herokuapp.com/v46.0/marketing-cloud/zalo/sendMessage"
     },
     "stop": {
-      "url": "URI/for/your/activity/stop"
+      "url": "https://zalo-call-back.herokuapp.com/v46.0/marketing-cloud/zalo/sendMessage"
     }
   },
   "wizardSteps": [
