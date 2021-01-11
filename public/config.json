@@ -16,7 +16,7 @@
     "execute": {
       "inArguments": [
         {
-          "contactIdentifier": "{{Contact.Attribute.MasterSubscriber.LastName}}"
+          "contactIdentifier": "{{Contact.Key}}"
         }
       ],
       "outArguments": [
