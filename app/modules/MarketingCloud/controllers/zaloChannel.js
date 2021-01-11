@@ -19,7 +19,7 @@ exports.sendMessage = async (req, res, next) => {
         return response.success(req, res, {
             'err_code': 0,
             'msg': 'success'
-        }, 200);
+        }, 201);
     }catch(e){
         let error = e + '';
         redis.s('Callback-Zalo-Error:'+created_at, error);
@@ -37,7 +37,7 @@ exports.saveJourney = async (req, res, next) => {
         return response.success(req, res, {
             'err_code': 0,
             'msg': 'success'
-        }, 200);
+        }, 201);
     }catch(e){
         let error = e + '';
         redis.s('Callback-Zalo-Error:'+created_at, error);
@@ -55,7 +55,7 @@ exports.publishJourney = async (req, res, next) => {
         return response.success(req, res, {
             'err_code': 0,
             'msg': 'success'
-        }, 200);
+        }, 201);
     }catch(e){
         let error = e + '';
         redis.s('Callback-Zalo-Error:'+created_at, error);
@@ -73,7 +73,7 @@ exports.validateJourney = async (req, res, next) => {
         return response.success(req, res, {
             'err_code': 0,
             'msg': 'success'
-        }, 200);
+        }, 201);
     }catch(e){
         let error = e + '';
         redis.s('Callback-Zalo-Error:'+created_at, error);
@@ -91,7 +91,7 @@ exports.stopJourney = async (req, res, next) => {
         return response.success(req, res, {
             'err_code': 0,
             'msg': 'success'
-        }, 200);
+        }, 201);
     }catch(e){
         let error = e + '';
         redis.s('Callback-Zalo-Error:'+created_at, error);
