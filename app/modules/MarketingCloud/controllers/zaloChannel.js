@@ -17,8 +17,7 @@ exports.sendMessage = async (req, res, next) => {
     try{
         console.log('sendMessage', req.body);
         return response.success(req, res, {
-            'err_code': 0,
-            'msg': 'success'
+            "success": true
         }, 201);
     }catch(e){
         let error = e + '';
@@ -35,8 +34,7 @@ exports.saveJourney = async (req, res, next) => {
     try{
         console.log('saveJourney', req.body);
         return response.success(req, res, {
-            'err_code': 0,
-            'msg': 'success'
+            "success": true
         }, 201);
     }catch(e){
         let error = e + '';
@@ -53,8 +51,7 @@ exports.publishJourney = async (req, res, next) => {
     try{
         console.log('publishJourney', req.body);
         return response.success(req, res, {
-            'err_code': 0,
-            'msg': 'success'
+            "success": true
         }, 201);
     }catch(e){
         let error = e + '';
@@ -71,8 +68,7 @@ exports.validateJourney = async (req, res, next) => {
     try{
         console.log('validateJourney', req.body);
         return response.success(req, res, {
-            'err_code': 0,
-            'msg': 'success'
+            "success": true
         }, 201);
     }catch(e){
         let error = e + '';
@@ -89,8 +85,7 @@ exports.stopJourney = async (req, res, next) => {
     try{
         console.log('stopJourney', req.body);
         return response.success(req, res, {
-            'err_code': 0,
-            'msg': 'success'
+            "success": true
         }, 201);
     }catch(e){
         let error = e + '';
