@@ -151,16 +151,27 @@ define([
         );
 
         let inArguments = hasInArguments ? payload['arguments'].execute.inArguments : {};
-
+        let check = false;
         $.each(inArguments, function (index, inArgument) {
             $.each(inArgument, function (key, val) {
                 if (key === 'config') {
                     val.oa_id = oa_id;
                     val.access_token = access_token;
                     val.message = message;
+                    check = true;
                 }
             });
         });
+
+        if(check === false){
+            payload['arguments'].execute.inArguments.push({
+                "config": {
+                    "oa_id": oa_id,
+                    "access_token": access_token,
+                    "message": message
+                }
+            });
+        }
 
         payload['arguments'].execute.inArguments = inArguments;
 
