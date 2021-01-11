@@ -146,7 +146,7 @@ define([
         if(typeof Array.isArray(payload['arguments'].execute.inArguments) === 'undefined'){
             payload['arguments'].execute.inArguments = [];
         }
-        payload['arguments'].execute.inArguments['config'] = {
+        payload['arguments'].execute.inArguments["config"] = {
             "oa_id": oa_id,
             "access_token": access_token,
             "message": message
