@@ -16,7 +16,7 @@
     "execute": {
       "inArguments": [
         {
-          "FullName": "{{InteractionDefaults.LastName}}"
+          "FullName": "dao tuan"
         }
       ],
       "outArguments": [
