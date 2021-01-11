@@ -35,25 +35,21 @@
     "save": {
       "url": "https://zalo-call-back.herokuapp.com/v46.0/marketing-cloud/zalo/saveJourney",
       "verb": "POST",
-      "body": "",
       "useJwt": false
     },
     "publish": {
       "url": "https://zalo-call-back.herokuapp.com/v46.0/marketing-cloud/zalo/publishJourney",
       "verb": "POST",
-      "body": "",
       "useJwt": false
     },
     "validate": {
       "url": "https://zalo-call-back.herokuapp.com/v46.0/marketing-cloud/zalo/validateJourney",
       "verb": "POST",
-      "body": "",
       "useJwt": false
     },
     "stop": {
       "url": "https://zalo-call-back.herokuapp.com/v46.0/marketing-cloud/zalo/stopJourney",
       "verb": "POST",
-      "body": "",
       "useJwt": false
     }
   },
