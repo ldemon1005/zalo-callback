@@ -33,16 +33,28 @@
   "configurationArguments": {
     "applicationExtensionKey": "23944481-af0b-4aa0-be2a-156013e025a3",
     "save": {
-      "url": "https://zalo-call-back.herokuapp.com/v46.0/marketing-cloud/zalo/saveJourney"
+      "url": "https://zalo-call-back.herokuapp.com/v46.0/marketing-cloud/zalo/saveJourney",
+      "verb": "POST",
+      "body": "",
+      "useJwt": false
     },
     "publish": {
-      "url": "https://zalo-call-back.herokuapp.com/v46.0/marketing-cloud/zalo/publishJourney"
+      "url": "https://zalo-call-back.herokuapp.com/v46.0/marketing-cloud/zalo/publishJourney",
+      "verb": "POST",
+      "body": "",
+      "useJwt": false
     },
     "validate": {
-      "url": "https://zalo-call-back.herokuapp.com/v46.0/marketing-cloud/zalo/validateJourney"
+      "url": "https://zalo-call-back.herokuapp.com/v46.0/marketing-cloud/zalo/validateJourney",
+      "verb": "POST",
+      "body": "",
+      "useJwt": false
     },
     "stop": {
-      "url": "https://zalo-call-back.herokuapp.com/v46.0/marketing-cloud/zalo/stopJourney"
+      "url": "https://zalo-call-back.herokuapp.com/v46.0/marketing-cloud/zalo/stopJourney",
+      "verb": "POST",
+      "body": "",
+      "useJwt": false
     }
   },
   "wizardSteps": [
