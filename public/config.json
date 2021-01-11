@@ -17,6 +17,9 @@
       "inArguments": [
         {
           "FullName": "{{InteractionDefaults.LastName}}"
+        },
+        {
+          "CustomerID": "{{InteractionDefaults.CustomerID}}"
         }
       ],
       "outArguments": [
