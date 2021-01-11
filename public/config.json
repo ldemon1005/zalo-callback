@@ -1,5 +1,5 @@
 {
-  "workflowApiVersion": "1.2",
+  "workflowApiVersion": "1.1",
   "metaData": {
     "icon": "images/sms.png",
     "category": "message",
@@ -8,7 +8,7 @@
   "type": "REST",
   "lang": {
     "en-US": {
-      "name": "Zalo Message",
+      "name": "Zalo Message v1.0",
       "description": "Zalo Message"
     }
   },
@@ -17,6 +17,9 @@
       "inArguments": [
         {
           "contactIdentifier": "{{Contact.Key}}"
+        },
+        {
+          "LastName": "{{Contact.LastName}}"
         }
       ],
       "outArguments": [
