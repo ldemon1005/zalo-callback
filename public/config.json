@@ -8,7 +8,7 @@
   "type": "REST",
   "lang": {
     "en-US": {
-      "name": "Zalo Message 1",
+      "name": "Zalo Message",
       "description": "Zalo Message"
     }
   },
@@ -16,10 +16,7 @@
     "execute": {
       "inArguments": [
         {
-          "FullName": "{{InteractionDefaults.LastName}}"
-        },
-        {
-          "CustomerID": "{{InteractionDefaults.CustomerID}}"
+          "contactIdentifier": "{{Contact.Key}}"
         }
       ],
       "outArguments": [
