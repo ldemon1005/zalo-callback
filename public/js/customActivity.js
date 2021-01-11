@@ -146,13 +146,11 @@ define([
         if(typeof Array.isArray(payload['arguments'].execute.inArguments) === 'undefined'){
             payload['arguments'].execute.inArguments = [];
         }
-        payload['arguments'].execute.inArguments.push({
-            "config": {
-                "oa_id": oa_id,
-                "access_token": access_token,
-                "message": message
-            }
-        });
+        payload['arguments'].execute.inArguments['config'] = {
+            "oa_id": oa_id,
+            "access_token": access_token,
+            "message": message
+        };
 
         payload['metaData'].isConfigured = true;
 
