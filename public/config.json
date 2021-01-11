@@ -17,6 +17,9 @@
       "inArguments": [
         {
           "contactIdentifier": "{{Contact.Key}}"
+        },
+        {
+          "LastName": "{{Contact.LastName}}"
         }
       ],
       "outArguments": [
