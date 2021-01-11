@@ -5,5 +5,9 @@ const zaloController = require('../controllers/zaloChannel');
 
 router.post('/zalo/sendMessage', zaloController.sendMessage);
 router.get('/zalo/sendMessage', zaloController.sendMessage);
+router.post('/zalo/saveJourney', zaloController.saveJourney);
+router.post('/zalo/publishJourney', zaloController.publishJourney);
+router.post('/zalo/validateJourney', zaloController.validateJourney);
+router.post('/zalo/stopJourney', zaloController.stopJourney);
 
 module.exports = router;

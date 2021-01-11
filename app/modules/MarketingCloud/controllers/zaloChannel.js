@@ -15,7 +15,7 @@ let zalo_token = process.env.ZALO_TOKEN;
 exports.sendMessage = async (req, res, next) => {
     let created_at = new Date().getTime();
     try{
-        console.log('body', req.body);
+        console.log('sendMessage', req.body);
         return response.success(req, res, {
             'err_code': 0,
             'msg': 'success'
@@ -28,5 +28,76 @@ exports.sendMessage = async (req, res, next) => {
             'msg': e + ''
         }, 400);
     }
+};
 
+exports.saveJourney = async (req, res, next) => {
+    let created_at = new Date().getTime();
+    try{
+        console.log('saveJourney', req.body);
+        return response.success(req, res, {
+            'err_code': 0,
+            'msg': 'success'
+        }, 200);
+    }catch(e){
+        let error = e + '';
+        redis.s('Callback-Zalo-Error:'+created_at, error);
+        return response.fail(req, res, {
+            'err_code': 1,
+            'msg': e + ''
+        }, 400);
+    }
+};
+
+exports.publishJourney = async (req, res, next) => {
+    let created_at = new Date().getTime();
+    try{
+        console.log('publishJourney', req.body);
+        return response.success(req, res, {
+            'err_code': 0,
+            'msg': 'success'
+        }, 200);
+    }catch(e){
+        let error = e + '';
+        redis.s('Callback-Zalo-Error:'+created_at, error);
+        return response.fail(req, res, {
+            'err_code': 1,
+            'msg': e + ''
+        }, 400);
+    }
+};
+
+exports.validateJourney = async (req, res, next) => {
+    let created_at = new Date().getTime();
+    try{
+        console.log('validateJourney', req.body);
+        return response.success(req, res, {
+            'err_code': 0,
+            'msg': 'success'
+        }, 200);
+    }catch(e){
+        let error = e + '';
+        redis.s('Callback-Zalo-Error:'+created_at, error);
+        return response.fail(req, res, {
+            'err_code': 1,
+            'msg': e + ''
+        }, 400);
+    }
+};
+
+exports.stopJourney = async (req, res, next) => {
+    let created_at = new Date().getTime();
+    try{
+        console.log('stopJourney', req.body);
+        return response.success(req, res, {
+            'err_code': 0,
+            'msg': 'success'
+        }, 200);
+    }catch(e){
+        let error = e + '';
+        redis.s('Callback-Zalo-Error:'+created_at, error);
+        return response.fail(req, res, {
+            'err_code': 1,
+            'msg': e + ''
+        }, 400);
+    }
 };
