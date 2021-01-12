@@ -9,7 +9,7 @@ const baseRepository = require('../../../services/repository'),
 const Promise = require("bluebird"), request = Promise.promisifyAll(require('request'));
 const instance_url = process.env.INSTANCE_URL || 'https://tuandv1005-dev-ed.my.salesforce.com';
 
-exports.callBackGetAccessToken = async (req, res, next) => {
+exports.callbackGetAccessToken = async (req, res, next) => {
     let created_at = new Date().getTime();
     try{
         let key = 'Zalo-access-token:' + req.query.oaId;

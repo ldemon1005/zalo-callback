@@ -9,6 +9,6 @@ router.post('/zalo/saveJourney', zaloController.saveJourney);
 router.post('/zalo/publishJourney', zaloController.publishJourney);
 router.post('/zalo/validateJourney', zaloController.validateJourney);
 router.post('/zalo/stopJourney', zaloController.stopJourney);
-router.get('/zalo/callbackGetAccessToken', zaloController.stopJourney);
+router.get('/zalo/callbackGetAccessToken', zaloController.callbackGetAccessToken);
 
 module.exports = router;
