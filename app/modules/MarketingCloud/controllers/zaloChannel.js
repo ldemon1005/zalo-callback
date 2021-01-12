@@ -4,13 +4,32 @@ const baseRepository = require('../../../services/repository'),
     consts = require('../../../consts'),
     eventName = require('../../../consts/eventName'),
     { redis, pgsql } = require('../../../libs/db'),
-    serviceZalo = require('../../../libs/serviceSocial'),
+    serviceSocial = require('../../../libs/serviceSocial'),
     winston = require('../../../configs/winston');
 const Promise = require("bluebird"), request = Promise.promisifyAll(require('request'));
 const instance_url = process.env.INSTANCE_URL || 'https://tuandv1005-dev-ed.my.salesforce.com';
-let zalo_url = process.env.ZALO_URL;
-let zalo_oa_id = process.env.ZALO_OA_ID;
-let zalo_token = process.env.ZALO_TOKEN;
+
+exports.callBackGetAccessToken = async (req, res, next) => {
+    let created_at = new Date().getTime();
+    try{
+        let key = 'Zalo-access-token:' + req.query.oaId;
+        await redis.s(key, req.query.access_token, 60*60*24*360);
+        return response.success(req, res, {
+            "success": true,
+            "data" : {
+                "access_token":  req.query.access_token,
+                "oaId": req.query.oaId
+            }
+        }, 201);
+    }catch(e){
+        let error = e + '';
+        redis.s('Callback-Zalo-Error:'+created_at, error);
+        return response.fail(req, res, {
+            'err_code': 1,
+            'msg': e + ''
+        }, 400);
+    }
+};
 
 exports.sendMessage = async (req, res, next) => {
     let created_at = new Date().getTime();

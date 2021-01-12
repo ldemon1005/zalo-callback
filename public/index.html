@@ -44,14 +44,7 @@
 		<label class="slds-form-element__label" for="oa_id">
 			<abbr class="slds-required" title="required">* </abbr>Oa ID</label>
 		<div class="slds-form-element__control">
-			<input type="text" id="oa_id" placeholder="Oa ID" required="" class="slds-input" />
-		</div>
-	</div>
-	<div class="slds-form-element">
-		<label class="slds-form-element__label" for="access_token">
-			<abbr class="slds-required" title="required">* </abbr>Access Token</label>
-		<div class="slds-form-element__control">
-			<input type="text" id="access_token" placeholder="Access Token" required="" class="slds-input" />
+			<input type="text" onchange="changeCallbackUrl()" id="oa_id" placeholder="Oa ID" required="" class="slds-input" />
 		</div>
 	</div>
 
@@ -59,6 +52,14 @@
 		<label class="slds-form-element__label" for="message">Message text</label>
 		<div class="slds-form-element__control">
 			<textarea id="message" placeholder="message text…" class="slds-textarea"></textarea>
+		</div>
+	</div>
+
+	<div class="slds-form-element">
+		<label class="slds-form-element__label" for="text-input-id-1">Access token</label>
+		<div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left">
+			<a id="get_access_token" target="_blank" class="slds-button slds-button_brand" href="https://oauth.zaloapp.com/v3/oa/permission?redirect_uri=<OFFICIAL_ACOUNT_CALLBACKURL>&app_id=<APP_ID>">Get Access Token</a>
+			<input type="text" id="text-input-id-1" placeholder="Placeholder text…" class="slds-input" />
 		</div>
 	</div>
 </div>
