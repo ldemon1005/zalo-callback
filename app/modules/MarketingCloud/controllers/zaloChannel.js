@@ -39,6 +39,7 @@ exports.sendMessage = async (req, res, next) => {
             let url = 'https://openapi.zalo.me/v2.0/oa/message?access_token=';
             let body = {};
             for(const [key, value] of Object.entries(req.body.inArguments)){
+                console.log(key, value)
                 if(key === 'config'){
                     console.log('value', value)
                     url = url + value.access_token + '&oaId=' + value.oa_id;
@@ -51,7 +52,8 @@ exports.sendMessage = async (req, res, next) => {
                     body.recipient.user_id = value
                 }
             }
-            console.log(url, body);
+            console.log('url', url);
+            console.log('body', body);
             await serviceZalo.postAsyncService(url, body)
         }
         return response.success(req, res, {
