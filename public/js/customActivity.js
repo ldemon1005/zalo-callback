@@ -12,7 +12,7 @@ define([
         {"label": "Setup Zalo OA Channel", "key": "step1"}
     ];
     var currentStep = steps[0].key;
-
+    var eventDefinitionKey;
     $(window).ready(onRender);
 
     connection.on('initActivity', initialize);
@@ -131,6 +131,13 @@ define([
                 break;
         }
     }
+    connection.trigger('requestTriggerEventDefinition');
+    connection.on('requestedTriggerEventDefinition',
+        function (eventDefinitionModel) {
+            if (eventDefinitionModel) {
+                eventDefinitionKey = eventDefinitionModel.eventDefinitionKey;
+            }
+        });
 
     function save() {
         var access_token = $('#access_token').val();
@@ -151,24 +158,40 @@ define([
         );
 
         let inArguments = hasInArguments ? payload['arguments'].execute.inArguments : {};
-        let check = false;
+        let checkConfig = false;
+        let checkData = false;
         $.each(inArguments, function (index, inArgument) {
             $.each(inArgument, function (key, val) {
                 if (key === 'config') {
                     val.oa_id = oa_id;
                     val.access_token = access_token;
                     val.message = message;
-                    check = true;
+                    checkConfig = true;
+                }
+
+                if (key === 'data') {
+                    val.LastName = "{{Event."+ eventDefinitionKey +".LastName}}";
+                    val.FirstName = "{{Event."+ eventDefinitionKey +".FirstName}}";
+                    checkData = true;
                 }
             });
         });
 
-        if(check === false){
+        if(checkConfig === false){
             payload['arguments'].execute.inArguments.push({
                 "config": {
                     "oa_id": oa_id,
                     "access_token": access_token,
                     "message": message
+                }
+            });
+        }
+
+        if(checkData === false){
+            payload['arguments'].execute.inArguments.push({
+                "data": {
+                    "LastName": "{{Event."+ eventDefinitionKey +".LastName}}",
+                    "FirstName": "{{Event."+ eventDefinitionKey +".FirstName}}"
                 }
             });
         }
@@ -179,4 +202,5 @@ define([
 
         connection.trigger('updateActivity', payload);
     }
+
 });
