@@ -40,6 +40,7 @@ exports.sendMessage = async (req, res, next) => {
             let body = {};
             for(const [key, value] of Object.entries(req.body.inArguments)){
                 if(key === 'config'){
+                    console.log('value', value)
                     url = url + value.access_token + '&oaId=' + value.oa_id;
                     body.message = {
                         'text': value.message
