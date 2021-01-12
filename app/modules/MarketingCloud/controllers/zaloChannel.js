@@ -42,18 +42,18 @@ exports.sendMessage = async (req, res, next) => {
                 if(value.config){
                     url = url + value.config.access_token + '&oaId=' + value.config.oa_id;
                     body.message = {
-                        'text': value.message
+                        'text': value.config.message
                     }
                 }
                 if(value.data){
                     body.recipient = {};
-                    if(value.zalo_id) body.recipient.user_id = value.data.zalo_id
+                    if(value.data.zalo_id) body.recipient.user_id = value.data.zalo_id
                     else body.recipient.user_id = value.data.phone
                 }
             }
             console.log('url', url);
             console.log('body', body);
-            await serviceZalo.postAsyncService(url, body)
+             await serviceZalo.postAsyncService(url, body)
         }
         return response.success(req, res, {
             "success": true
