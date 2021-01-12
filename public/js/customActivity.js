@@ -5,7 +5,6 @@ define([
 ) {
     'use strict';
     const redirect_uri = 'https://zalo-call-back.herokuapp.com/v46.0/marketing-cloud/zalo/callbackGetAccessToken';
-    const base_callback_url = 'https://oauth.zaloapp.com/v3/oa/permission?redirect_uri=' + redirect_uri + '&app_id=';
     var callback_url = 'https://oauth.zaloapp.com/v3/oa/permission?redirect_uri=' + redirect_uri + '&app_id=3509613857790211370';
     var connection = new Postmonger.Session();
     var payload = {};
@@ -73,7 +72,6 @@ define([
                     oa_id = val.oa_id;
                     access_token = val.access_token;
                     message = val.message;
-                    callback_url = base_callback_url + oa_id;
                     $('#get_access_token').attr('href', callback_url);
                 }
             });
