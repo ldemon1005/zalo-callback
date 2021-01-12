@@ -49,20 +49,22 @@
 	</div>
 
 	<div class="slds-form-element">
-		<label class="slds-form-element__label" for="message">Message text</label>
+		<label class="slds-form-element__label" for="message">
+			<abbr class="slds-required" title="required">* </abbr>Message text</label>
 		<div class="slds-form-element__control">
 			<textarea id="message" placeholder="message text…" class="slds-textarea"></textarea>
 		</div>
 	</div>
 
 	<div class="slds-form-element">
-		<label class="slds-form-element__label" for="text-input-id-1">Access token</label>
+		<label class="slds-form-element__label" for="access_token">
+			<abbr class="slds-required" title="required">* </abbr>Access token</label>
 		<div class="slds-form-element__control slds-grid slds-gutters">
 			<div class="slds-col slds-size_1-of-5">
 				<a id="get_access_token" target="_blank" class="slds-button slds-button_brand" href="https://oauth.zaloapp.com/v3/oa/permission?redirect_uri=<OFFICIAL_ACOUNT_CALLBACKURL>&app_id=<APP_ID>">Get Access Token</a>
 			</div>
 			<div class="slds-col slds-size_4-of-5">
-				<input type="text" id="text-input-id-1" placeholder="Placeholder text…" class="slds-input" />
+				<input type="text" id="access_token" placeholder="access token…" class="slds-input" />
 			</div>
 		</div>
 	</div>

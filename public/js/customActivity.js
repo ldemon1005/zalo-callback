@@ -89,7 +89,7 @@ define([
         showStep(null, 1);
     }
 
-    $('#oa_id').on('input', function(){
+    $('#oa_id').on('input', function () {
         let oa_id = $('#oa_id').val();
         callback_url = base_callback_url + oa_id;
         $('#get_access_token').attr('href', callback_url);
@@ -141,6 +141,7 @@ define([
                 break;
         }
     }
+
     connection.trigger('requestTriggerEventDefinition');
     connection.on('requestedTriggerEventDefinition',
         function (eventDefinitionModel) {
@@ -154,63 +155,62 @@ define([
         var oa_id = $('#oa_id').val();
         var message = $('#message').val();
 
-        // 'payload' is initialized on 'initActivity' above.
-        // Journey Builder sends an initial payload with defaults
-        // set by this activity's config.json file.  Any property
-        // may be overridden as desired.
-        payload.name = 'Zalo Message';
+        if (access_token && oa_id && message) {
+            payload.name = 'Zalo Message';
 
-        var hasInArguments = Boolean(
-            payload['arguments'] &&
-            payload['arguments'].execute &&
-            payload['arguments'].execute.inArguments &&
-            payload['arguments'].execute.inArguments.length > 0
-        );
+            var hasInArguments = Boolean(
+                payload['arguments'] &&
+                payload['arguments'].execute &&
+                payload['arguments'].execute.inArguments &&
+                payload['arguments'].execute.inArguments.length > 0
+            );
 
-        let inArguments = hasInArguments ? payload['arguments'].execute.inArguments : {};
-        let checkConfig = false;
-        let checkData = false;
-        $.each(inArguments, function (index, inArgument) {
-            $.each(inArgument, function (key, val) {
-                if (key === 'config') {
-                    val.oa_id = oa_id;
-                    val.access_token = access_token;
-                    val.message = message;
-                    checkConfig = true;
-                }
+            let inArguments = hasInArguments ? payload['arguments'].execute.inArguments : {};
+            let checkConfig = false;
+            let checkData = false;
+            $.each(inArguments, function (index, inArgument) {
+                $.each(inArgument, function (key, val) {
+                    if (key === 'config') {
+                        val.oa_id = oa_id;
+                        val.access_token = access_token;
+                        val.message = message;
+                        checkConfig = true;
+                    }
 
-                if (key === 'data') {
-                    val.LastName = "{{Event."+ eventDefinitionKey +".LastName}}";
-                    val.FirstName = "{{Event."+ eventDefinitionKey +".FirstName}}";
-                    checkData = true;
-                }
+                    if (key === 'data') {
+                        val.LastName = "{{Event." + eventDefinitionKey + ".LastName}}";
+                        val.FirstName = "{{Event." + eventDefinitionKey + ".FirstName}}";
+                        checkData = true;
+                    }
+                });
             });
-        });
 
-        if(checkConfig === false){
-            payload['arguments'].execute.inArguments.push({
-                "config": {
-                    "oa_id": oa_id,
-                    "access_token": access_token,
-                    "message": message
-                }
-            });
+            if (checkConfig === false) {
+                payload['arguments'].execute.inArguments.push({
+                    "config": {
+                        "oa_id": oa_id,
+                        "access_token": access_token,
+                        "message": message
+                    }
+                });
+            }
+
+            if (checkData === false) {
+                payload['arguments'].execute.inArguments.push({
+                    "data": {
+                        "LastName": "{{Event." + eventDefinitionKey + ".LastName}}",
+                        "FirstName": "{{Event." + eventDefinitionKey + ".FirstName}}"
+                    }
+                });
+            }
+
+            payload['arguments'].execute.inArguments = inArguments;
+
+            payload['metaData'].isConfigured = true;
+
+            connection.trigger('updateActivity', payload);
         }
 
-        if(checkData === false){
-            payload['arguments'].execute.inArguments.push({
-                "data": {
-                    "LastName": "{{Event."+ eventDefinitionKey +".LastName}}",
-                    "FirstName": "{{Event."+ eventDefinitionKey +".FirstName}}"
-                }
-            });
-        }
-
-        payload['arguments'].execute.inArguments = inArguments;
-
-        payload['metaData'].isConfigured = true;
-
-        connection.trigger('updateActivity', payload);
     }
 
 });
