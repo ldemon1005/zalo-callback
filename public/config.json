@@ -16,7 +16,7 @@
     "execute": {
       "inArguments": [
         {
-          "contactIdentifier": "key: {{Contact.Key}} , LastName: {{Contact.Attribute.'Zalo Message'.LastName}}, Lastname: {{Contact.Attribute.'MasterSubscriber'.LastName}}"
+          "contactIdentifier": "key: {{Contact.Key}} , LastName: {{Contact.Attribute.\"Zalo Message\".LastName}}, Lastname: {{Contact.Attribute.MasterSubscriber.LastName}}"
         }
       ],
       "outArguments": [
