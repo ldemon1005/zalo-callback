@@ -57,9 +57,13 @@
 
 	<div class="slds-form-element">
 		<label class="slds-form-element__label" for="text-input-id-1">Access token</label>
-		<div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left">
-			<a id="get_access_token" target="_blank" class="slds-button slds-button_brand slds-input__icon slds-input__icon_left" href="https://oauth.zaloapp.com/v3/oa/permission?redirect_uri=<OFFICIAL_ACOUNT_CALLBACKURL>&app_id=<APP_ID>">Get Access Token</a>
-			<input type="text" id="text-input-id-1" placeholder="Placeholder text…" class="slds-input" />
+		<div class="slds-form-element__control slds-grid slds-gutters">
+			<div class="slds-col slds-size_1-of-5">
+				<a id="get_access_token" target="_blank" class="slds-button slds-button_brand" href="https://oauth.zaloapp.com/v3/oa/permission?redirect_uri=<OFFICIAL_ACOUNT_CALLBACKURL>&app_id=<APP_ID>">Get Access Token</a>
+			</div>
+			<div class="slds-col slds-size_4-of-5">
+				<input type="text" id="text-input-id-1" placeholder="Placeholder text…" class="slds-input" />
+			</div>
 		</div>
 	</div>
 </div>
