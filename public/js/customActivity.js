@@ -89,11 +89,11 @@ define([
         showStep(null, 1);
     }
 
-    function changeCallbackUrl(){
+    $('#oa_id').on('input', function(){
         let oa_id = $('#oa_id').val();
         callback_url = base_callback_url + oa_id;
         $('#get_access_token').attr('href', callback_url);
-    }
+    });
 
     function onGetTokens(tokens) {
         // Response: tokens = { token: <legacy token>, fuel2token: <fuel api token> }
