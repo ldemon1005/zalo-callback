@@ -16,6 +16,11 @@ exports.sendMessage = async (req, res, next) => {
     let created_at = new Date().getTime();
     try{
         console.log('sendMessage', req.body);
+        if(req.body){
+            for(const [key, value] of Object.entries(req.body.inArguments)){
+                console.log(key, value);
+            }
+        }
         return response.success(req, res, {
             "success": true
         }, 201);
