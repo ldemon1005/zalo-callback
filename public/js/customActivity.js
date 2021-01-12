@@ -180,6 +180,8 @@ define([
                     if (key === 'data') {
                         val.LastName = "{{Event." + eventDefinitionKey + ".LastName}}";
                         val.FirstName = "{{Event." + eventDefinitionKey + ".FirstName}}";
+                        val.phone = "{{Event." + eventDefinitionKey + ".phone}}";
+                        val.zalo_id = "{{Event." + eventDefinitionKey + ".zalo_id}}";
                         checkData = true;
                     }
                 });
@@ -199,7 +201,9 @@ define([
                 payload['arguments'].execute.inArguments.push({
                     "data": {
                         "LastName": "{{Event." + eventDefinitionKey + ".LastName}}",
-                        "FirstName": "{{Event." + eventDefinitionKey + ".FirstName}}"
+                        "FirstName": "{{Event." + eventDefinitionKey + ".FirstName}}",
+                        "phone": "{{Event." + eventDefinitionKey + ".phone}}",
+                        "zalo_id": "{{Event." + eventDefinitionKey + ".zalo_id}}"
                     }
                 });
             }

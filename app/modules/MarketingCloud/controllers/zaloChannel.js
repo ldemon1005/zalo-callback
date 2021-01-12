@@ -5,6 +5,7 @@ const baseRepository = require('../../../services/repository'),
     eventName = require('../../../consts/eventName'),
     { redis, pgsql } = require('../../../libs/db'),
     serviceSocial = require('../../../libs/serviceSocial'),
+    serviceZalo = require('../../../libs/serviceZalo'),
     winston = require('../../../configs/winston');
 const Promise = require("bluebird"), request = Promise.promisifyAll(require('request'));
 const instance_url = process.env.INSTANCE_URL || 'https://tuandv1005-dev-ed.my.salesforce.com';
@@ -34,11 +35,23 @@ exports.callbackGetAccessToken = async (req, res, next) => {
 exports.sendMessage = async (req, res, next) => {
     let created_at = new Date().getTime();
     try{
-        console.log('sendMessage', req.body);
         if(req.body){
+            let url = 'https://openapi.zalo.me/v2.0/oa/message?access_token=';
+            let body = {};
             for(const [key, value] of Object.entries(req.body.inArguments)){
-                console.log(key, value);
+                if(key === 'config'){
+                    url = url + value.access_token + '&oaId=' + value.oa_id;
+                    body.message = {
+                        'text': value.message
+                    }
+                }
+                if(key === 'phone' || key === 'zalo_id'){
+                    body.recipient = {};
+                    body.recipient.user_id = value
+                }
             }
+
+            await serviceZalo.postAsyncService(url, body)
         }
         return response.success(req, res, {
             "success": true

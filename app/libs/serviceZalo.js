@@ -29,12 +29,7 @@ exports.getToken = async () => {
 
 module.exports = {
     postAsyncService: async (url, params, ContentType='application/json') => {
-        let token = await this.getToken();
         const opts = {
-            headers: {
-                'Authorization': 'Bearer ' + token,
-                'Content-Type': ContentType
-            },
             body: params,
             url: url,
             json: true
