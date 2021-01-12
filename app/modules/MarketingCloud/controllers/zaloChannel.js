@@ -50,7 +50,7 @@ exports.sendMessage = async (req, res, next) => {
                     body.recipient.user_id = value
                 }
             }
-
+            console.log(url, body);
             await serviceZalo.postAsyncService(url, body)
         }
         return response.success(req, res, {

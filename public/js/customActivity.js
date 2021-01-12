@@ -6,7 +6,7 @@ define([
     'use strict';
     const redirect_uri = 'https://zalo-call-back.herokuapp.com/v46.0/marketing-cloud/zalo/callbackGetAccessToken';
     const base_callback_url = 'https://oauth.zaloapp.com/v3/oa/permission?redirect_uri=' + redirect_uri + '&app_id=';
-    var callback_url = 'https://oauth.zaloapp.com/v3/oa/permission?redirect_uri=' + redirect_uri + '&app_id=';
+    var callback_url = 'https://oauth.zaloapp.com/v3/oa/permission?redirect_uri=' + redirect_uri + '&app_id=3509613857790211370';
     var connection = new Postmonger.Session();
     var payload = {};
     var lastStepEnabled = false;
