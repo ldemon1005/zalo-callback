@@ -53,7 +53,7 @@ define([
         if (data) {
             payload = data;
         }
-
+        $('#get_access_token').attr('href', callback_url);
         let oa_id;
         let access_token;
         let message;
@@ -72,7 +72,6 @@ define([
                     oa_id = val.oa_id;
                     access_token = val.access_token;
                     message = val.message;
-                    $('#get_access_token').attr('href', callback_url);
                 }
             });
         });
