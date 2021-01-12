@@ -5,6 +5,7 @@ define([
 ) {
     'use strict';
     const redirect_uri = 'https://zalo-call-back.herokuapp.com/v46.0/marketing-cloud/zalo/callbackGetAccessToken';
+    var oa_id = '3509613857790211370';
     var callback_url = 'https://oauth.zaloapp.com/v3/oa/permission?redirect_uri=' + redirect_uri + '&app_id=3509613857790211370';
     var connection = new Postmonger.Session();
     var payload = {};
@@ -54,7 +55,7 @@ define([
             payload = data;
         }
         $('#get_access_token').attr('href', callback_url);
-        let oa_id;
+        // let oa_id;
         let access_token;
         let message;
         var hasInArguments = Boolean(
@@ -69,7 +70,7 @@ define([
         $.each(inArguments, function (index, inArgument) {
             $.each(inArgument, function (key, val) {
                 if (key === 'config') {
-                    oa_id = val.oa_id;
+                    // oa_id = val.oa_id;
                     access_token = val.access_token;
                     message = val.message;
                 }
@@ -86,11 +87,11 @@ define([
         showStep(null, 1);
     }
 
-    $('#oa_id').on('input', function () {
-        let oa_id = $('#oa_id').val();
-        callback_url = base_callback_url + oa_id;
-        $('#get_access_token').attr('href', callback_url);
-    });
+    // $('#oa_id').on('input', function () {
+    //     let oa_id = $('#oa_id').val();
+    //     callback_url = base_callback_url + oa_id;
+    //     $('#get_access_token').attr('href', callback_url);
+    // });
 
     function onGetTokens(tokens) {
         // Response: tokens = { token: <legacy token>, fuel2token: <fuel api token> }
@@ -149,7 +150,7 @@ define([
 
     function save() {
         var access_token = $('#access_token').val();
-        var oa_id = $('#oa_id').val();
+        // var oa_id = $('#oa_id').val();
         var message = $('#message').val();
 
         if (access_token && oa_id && message) {
